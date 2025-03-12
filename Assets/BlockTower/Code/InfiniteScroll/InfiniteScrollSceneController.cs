@@ -27,6 +27,7 @@ namespace BlockTower
                 MaxElements = 10,
                 ElementTemplate = _scrollElementTemplate,
                 DataCollection = dataArray,
+                SidePadding = 200,
             };
             infiniteScroll.GenerateElementsWithData();
         }

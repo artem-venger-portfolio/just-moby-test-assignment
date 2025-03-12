@@ -13,6 +13,7 @@ namespace BlockTower
         public int MaxElements { get; set; }
         public ScrollElement ElementTemplate { get; set; }
         public IList<ScrollElementData> DataCollection { get; set; }
+        public float SidePadding { get; set; }
 
         public void GenerateElementsWithData()
         {

@@ -383,7 +383,7 @@ GameObject:
   - component: {fileID: 781552036}
   - component: {fileID: 781552037}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: SceneController
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -413,9 +413,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 781552035}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eea9c224e185a0840b4b8531e8e7d2a4, type: 3}
+  m_Script: {fileID: 11500000, guid: 0cc41de81f6342eea0fb97c7c92e597b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _infiniteScroll: {fileID: 629792990}
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0

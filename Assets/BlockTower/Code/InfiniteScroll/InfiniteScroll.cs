@@ -1,4 +1,5 @@
-﻿using UnityEngine.UI;
+﻿using System.Collections.Generic;
+using UnityEngine.UI;
 
 namespace BlockTower
 {
@@ -7,5 +8,6 @@ namespace BlockTower
         public ScrollRect ScrollRect { get; set; }
         public int MaxElements { get; set; }
         public ScrollElement ElementTemplate { get; set; }
+        public IList<ScrollElementData> DataCollection { get; set; }
     }
 }

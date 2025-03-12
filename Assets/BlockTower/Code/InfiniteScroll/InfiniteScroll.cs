@@ -15,6 +15,7 @@ namespace BlockTower
         public IList<ScrollElementData> DataCollection { get; set; }
         public float SidePadding { get; set; }
         public float Spacing { get; set; }
+        public float RecycleThreshold { get; set; }
 
         public void GenerateElementsWithData()
         {

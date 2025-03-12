@@ -29,6 +29,7 @@ namespace BlockTower
                 DataCollection = dataArray,
                 SidePadding = 200,
                 Spacing = 400,
+                RecycleThreshold = 1000,
             };
             infiniteScroll.GenerateElementsWithData();
         }

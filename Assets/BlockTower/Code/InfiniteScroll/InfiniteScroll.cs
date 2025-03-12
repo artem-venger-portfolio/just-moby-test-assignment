@@ -6,5 +6,6 @@ namespace BlockTower
     {
         public ScrollRect ScrollRect { get; set; }
         public int MaxElements { get; set; }
+        public ScrollElement ElementTemplate { get; set; }
     }
 }

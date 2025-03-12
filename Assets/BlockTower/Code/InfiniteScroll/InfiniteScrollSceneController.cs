@@ -17,6 +17,7 @@ namespace BlockTower
             {
                 ScrollRect = _scrollRect,
                 MaxElements = 10,
+                ElementTemplate = _scrollElementTemplate,
             };
         }
     }

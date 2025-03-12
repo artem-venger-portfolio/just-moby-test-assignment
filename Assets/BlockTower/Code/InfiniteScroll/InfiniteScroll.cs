@@ -12,5 +12,7 @@ namespace BlockTower
         {
             _scrollRect = GetComponent<ScrollRect>();
         }
+        
+        public int MaxElements { get; set; }
     }
 }

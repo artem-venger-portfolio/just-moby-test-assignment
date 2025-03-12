@@ -6,5 +6,8 @@ namespace BlockTower
     {
         [SerializeField]
         private InfiniteScroll _infiniteScroll;
+
+        [SerializeField]
+        private ScrollElement _scrollElementTemplate;
     }
 }

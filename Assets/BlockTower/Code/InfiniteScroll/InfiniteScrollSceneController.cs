@@ -16,7 +16,10 @@ namespace BlockTower
             var dataArray = new ScrollElementData[100];
             for (var i = 0; i < 100; i++)
             {
-                dataArray[i] = new ScrollElementData();
+                dataArray[i] = new ScrollElementData
+                {
+                    Number = i,
+                };
             }
             var infiniteScroll = new InfiniteScroll
             {

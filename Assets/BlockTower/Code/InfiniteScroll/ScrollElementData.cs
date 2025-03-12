@@ -2,5 +2,6 @@
 {
     public class ScrollElementData
     {
+        public int Number { get; set; }
     }
 }

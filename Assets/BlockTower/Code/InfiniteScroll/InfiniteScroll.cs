@@ -1,18 +1,10 @@
-﻿using UnityEngine;
-using UnityEngine.UI;
+﻿using UnityEngine.UI;
 
 namespace BlockTower
 {
-    [RequireComponent(typeof(ScrollRect))]
-    public class InfiniteScroll : MonoBehaviour
+    public class InfiniteScroll
     {
-        private ScrollRect _scrollRect;
-        
-        private void Awake()
-        {
-            _scrollRect = GetComponent<ScrollRect>();
-        }
-        
+        public ScrollRect ScrollRect { get; set; }
         public int MaxElements { get; set; }
     }
 }

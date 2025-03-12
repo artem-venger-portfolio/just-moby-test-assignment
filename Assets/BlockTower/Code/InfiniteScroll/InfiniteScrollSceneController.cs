@@ -6,9 +6,6 @@ namespace BlockTower
     public class InfiniteScrollSceneController : MonoBehaviour
     {
         [SerializeField]
-        private InfiniteScroll _infiniteScroll;
-
-        [SerializeField]
         private ScrollRect _scrollRect;
 
         [SerializeField]
@@ -16,7 +13,11 @@ namespace BlockTower
 
         private void Start()
         {
-            _infiniteScroll.MaxElements = 10;
+            var infiniteScroll = new InfiniteScroll
+            {
+                ScrollRect = _scrollRect,
+                MaxElements = 10,
+            };
         }
     }
 }

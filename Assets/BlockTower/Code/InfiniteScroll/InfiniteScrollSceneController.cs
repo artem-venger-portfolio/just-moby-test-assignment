@@ -25,6 +25,7 @@ namespace BlockTower
                 ElementTemplate = _scrollElementTemplate,
                 DataCollection = dataArray,
             };
+            infiniteScroll.GenerateElementsWithData();
         }
     }
 }

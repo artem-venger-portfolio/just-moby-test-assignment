@@ -417,6 +417,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _infiniteScroll: {fileID: 629792990}
+  _scrollRect: {fileID: 629792989}
   _scrollElementTemplate: {fileID: 6742220771847890456, guid: b8c7fe86b1312634bb9977f6845dbb8d, type: 3}
 --- !u!1 &963194225
 GameObject:

@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 
 namespace BlockTower
 {
@@ -6,6 +7,9 @@ namespace BlockTower
     {
         [SerializeField]
         private InfiniteScroll _infiniteScroll;
+
+        [SerializeField]
+        private ScrollRect _scrollRect;
 
         [SerializeField]
         private ScrollElement _scrollElementTemplate;

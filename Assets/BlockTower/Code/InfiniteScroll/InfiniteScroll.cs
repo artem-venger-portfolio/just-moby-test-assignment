@@ -8,7 +8,7 @@ namespace BlockTower
     public class InfiniteScroll
     {
         private ScrollElement[] _elements;
-        private int _firstElementIndex;
+        private int _firstVisibleDataIndex;
         private bool _isFirstElementHidden;
         private int _maxVisibleElements;
 
@@ -56,7 +56,7 @@ namespace BlockTower
         {
             for (var i = 0; i < _elements.Length; i++)
             {
-                var dataIndex = _firstElementIndex + i;
+                var dataIndex = _firstVisibleDataIndex + i;
                 var data = DataCollection[dataIndex];
                 _elements[i].SetData(data);
             }
@@ -67,7 +67,7 @@ namespace BlockTower
             for (var i = 0; i < _elements.Length; i++)
             {
                 var currentElement = _elements[i];
-                var dataIndex = _firstElementIndex + i;
+                var dataIndex = _firstVisibleDataIndex + i;
                 currentElement.AnchoredPositionX = SidePadding + dataIndex * GetWidthPlusSpacing();
             }
         }

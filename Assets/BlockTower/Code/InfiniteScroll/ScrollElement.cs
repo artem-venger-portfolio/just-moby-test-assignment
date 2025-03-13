@@ -8,20 +8,13 @@ namespace BlockTower
         [SerializeField]
         private TMP_Text _numberField;
 
-        private RectTransform _transform;
-        
-        private void Awake()
-        {
-            _transform = (RectTransform)transform;
-        }
-
         public float AnchoredPositionX
         {
-            get => _transform.anchoredPosition.x;
-            set => _transform.anchoredPosition = new Vector2(value, _transform.anchoredPosition.y);
+            get => Transform.anchoredPosition.x;
+            set => Transform.anchoredPosition = new Vector2(value, Transform.anchoredPosition.y);
         }
 
-        public float Width => _transform.sizeDelta.x;
+        public float Width => Transform.sizeDelta.x;
 
         public void SetData(ScrollElementData data)
         {
@@ -32,6 +25,8 @@ namespace BlockTower
         {
             SetNumberFieldText(string.Empty);
         }
+
+        private RectTransform Transform => (RectTransform)transform;
 
         private void SetNumberFieldText(string text)
         {

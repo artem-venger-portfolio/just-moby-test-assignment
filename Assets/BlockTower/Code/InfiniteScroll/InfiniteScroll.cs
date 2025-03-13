@@ -21,6 +21,17 @@ namespace BlockTower
         {
             GenerateElements();
             SetDataToElements();
+            UpdateElementsPosition();
+        }
+
+        private void UpdateElementsPosition()
+        {
+            for (var i = 0; i < _elements.Length; i++)
+            {
+                var currentElement = _elements[i];
+                var dataIndex = _firstElementIndex + i;
+                currentElement.AnchoredPositionX = SidePadding + dataIndex * (ElementTemplate.Width + Spacing);
+            }
         }
 
         private void GenerateElements()

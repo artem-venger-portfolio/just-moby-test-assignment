@@ -22,16 +22,7 @@ namespace BlockTower
             GenerateElements();
             SetDataToElements();
             UpdateElementsPosition();
-        }
-
-        private void UpdateElementsPosition()
-        {
-            for (var i = 0; i < _elements.Length; i++)
-            {
-                var currentElement = _elements[i];
-                var dataIndex = _firstElementIndex + i;
-                currentElement.AnchoredPositionX = SidePadding + dataIndex * (ElementTemplate.Width + Spacing);
-            }
+            UpdateContentSize();
         }
 
         private void GenerateElements()
@@ -52,6 +43,30 @@ namespace BlockTower
                 var data = DataCollection[dataIndex];
                 _elements[i].SetData(data);
             }
+        }
+
+        private void UpdateElementsPosition()
+        {
+            for (var i = 0; i < _elements.Length; i++)
+            {
+                var currentElement = _elements[i];
+                var dataIndex = _firstElementIndex + i;
+                currentElement.AnchoredPositionX = SidePadding + dataIndex * GetWidthPlusSpacing();
+            }
+        }
+
+        private void UpdateContentSize()
+        {
+            var contentTransform = (RectTransform)ScrollRect.content.transform;
+            var size = contentTransform.sizeDelta;
+            var width = SidePadding * 2 + GetWidthPlusSpacing() * DataCollection.Count;
+            var height = size.y;
+            contentTransform.sizeDelta = new Vector2(width, height);
+        }
+
+        private float GetWidthPlusSpacing()
+        {
+            return ElementTemplate.Width + Spacing;
         }
     }
 }

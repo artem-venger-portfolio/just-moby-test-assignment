@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Object = UnityEngine.Object;
 
 namespace BlockTower
 {
@@ -23,6 +25,11 @@ namespace BlockTower
             SetDataToElements();
             UpdateElementsPosition();
             UpdateContentSize();
+        }
+
+        public void StartWatchingScrollRectChanges()
+        {
+            ScrollRect.onValueChanged.AddListener(ScrollRectValueChangedEventHandler);
         }
 
         private void GenerateElements()
@@ -67,6 +74,10 @@ namespace BlockTower
         private float GetWidthPlusSpacing()
         {
             return ElementTemplate.Width + Spacing;
+        }
+
+        private void ScrollRectValueChangedEventHandler(Vector2 value)
+        {
         }
     }
 }

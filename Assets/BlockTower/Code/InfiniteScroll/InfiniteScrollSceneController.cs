@@ -32,6 +32,7 @@ namespace BlockTower
                 RecycleThreshold = 1000,
             };
             infiniteScroll.GenerateElementsWithData();
+            infiniteScroll.StartWatchingScrollRectChanges();
         }
     }
 }

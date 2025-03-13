@@ -21,6 +21,8 @@ namespace BlockTower
             set => _transform.anchoredPosition = new Vector2(value, _transform.anchoredPosition.y);
         }
 
+        public float Width => _transform.sizeDelta.x;
+
         public void SetData(ScrollElementData data)
         {
             SetNumberFieldText(data.Number.ToString());

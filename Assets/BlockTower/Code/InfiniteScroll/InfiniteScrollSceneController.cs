@@ -31,6 +31,7 @@ namespace BlockTower
                 Spacing = 400,
                 RecycleThreshold = 1000,
             };
+            infiniteScroll.CalculateMaxVisibleElements();
             infiniteScroll.GenerateElementsWithData();
             infiniteScroll.StartWatchingScrollRectChanges();
         }

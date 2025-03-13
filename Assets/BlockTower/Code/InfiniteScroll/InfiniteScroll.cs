@@ -27,6 +27,13 @@ namespace BlockTower
             UpdateContentSize();
         }
 
+        public void CalculateMaxVisibleElements()
+        {
+            var viewport = ScrollRect.viewport;
+            var viewportWidth = viewport.rect.width;
+            var maxVisibleElements = Mathf.CeilToInt(viewportWidth / GetWidthPlusSpacing()) + 1;
+        }
+
         public void StartWatchingScrollRectChanges()
         {
             ScrollRect.onValueChanged.AddListener(ScrollRectValueChangedEventHandler);

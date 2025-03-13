@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Object = UnityEngine.Object;
@@ -10,6 +9,7 @@ namespace BlockTower
     {
         private ScrollElement[] _elements;
         private int _firstElementIndex;
+        private bool _isFirstElementHidden;
 
         public ScrollRect ScrollRect { get; set; }
         public int MaxElements { get; set; }
@@ -31,6 +31,8 @@ namespace BlockTower
         {
             ScrollRect.onValueChanged.AddListener(ScrollRectValueChangedEventHandler);
         }
+
+        private RectTransform ScrollRectContent => ScrollRect.content;
 
         private void GenerateElements()
         {
@@ -64,11 +66,10 @@ namespace BlockTower
 
         private void UpdateContentSize()
         {
-            var contentTransform = (RectTransform)ScrollRect.content.transform;
-            var size = contentTransform.sizeDelta;
+            var size = ScrollRectContent.sizeDelta;
             var width = SidePadding * 2 + GetWidthPlusSpacing() * DataCollection.Count;
             var height = size.y;
-            contentTransform.sizeDelta = new Vector2(width, height);
+            ScrollRectContent.sizeDelta = new Vector2(width, height);
         }
 
         private float GetWidthPlusSpacing()
@@ -78,6 +79,12 @@ namespace BlockTower
 
         private void ScrollRectValueChangedEventHandler(Vector2 value)
         {
+            var isFirstElementHidden = ScrollRectContent.anchoredPosition.x + _elements[1].AnchoredPositionX <= 0;
+            if (_isFirstElementHidden != isFirstElementHidden)
+            {
+                _isFirstElementHidden = isFirstElementHidden;
+                Debug.Log($"{nameof(_isFirstElementHidden)}: {_isFirstElementHidden}");
+            }
         }
     }
 }

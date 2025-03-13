@@ -24,14 +24,12 @@ namespace BlockTower
             var infiniteScroll = new InfiniteScroll
             {
                 ScrollRect = _scrollRect,
-                MaxElements = 10,
                 ElementTemplate = _scrollElementTemplate,
                 DataCollection = dataArray,
                 SidePadding = 200,
                 Spacing = 400,
                 RecycleThreshold = 1000,
             };
-            infiniteScroll.CalculateMaxVisibleElements();
             infiniteScroll.GenerateElementsWithData();
             infiniteScroll.StartWatchingScrollRectChanges();
         }

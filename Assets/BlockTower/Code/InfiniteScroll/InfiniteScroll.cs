@@ -10,9 +10,9 @@ namespace BlockTower
         private ScrollElement[] _elements;
         private int _firstElementIndex;
         private bool _isFirstElementHidden;
+        private int _maxVisibleElements;
 
         public ScrollRect ScrollRect { get; set; }
-        public int MaxElements { get; set; }
         public ScrollElement ElementTemplate { get; set; }
         public IList<ScrollElementData> DataCollection { get; set; }
         public float SidePadding { get; set; }
@@ -21,17 +21,11 @@ namespace BlockTower
 
         public void GenerateElementsWithData()
         {
+            CalculateMaxVisibleElements();
             GenerateElements();
             SetDataToElements();
             UpdateElementsPosition();
             UpdateContentSize();
-        }
-
-        public void CalculateMaxVisibleElements()
-        {
-            var viewport = ScrollRect.viewport;
-            var viewportWidth = viewport.rect.width;
-            var maxVisibleElements = Mathf.CeilToInt(viewportWidth / GetWidthPlusSpacing()) + 1;
         }
 
         public void StartWatchingScrollRectChanges()
@@ -41,9 +35,16 @@ namespace BlockTower
 
         private RectTransform ScrollRectContent => ScrollRect.content;
 
+        private void CalculateMaxVisibleElements()
+        {
+            var viewport = ScrollRect.viewport;
+            var viewportWidth = viewport.rect.width;
+            _maxVisibleElements = Mathf.CeilToInt(viewportWidth / GetWidthPlusSpacing()) + 1;
+        }
+
         private void GenerateElements()
         {
-            var elementsToCreate = Mathf.Min(MaxElements, DataCollection.Count);
+            var elementsToCreate = Mathf.Min(_maxVisibleElements, DataCollection.Count);
             _elements = new ScrollElement[elementsToCreate];
             for (var i = 0; i < elementsToCreate; i++)
             {

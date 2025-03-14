@@ -11,8 +11,7 @@ namespace BlockTower
         private Transform _draggingObjectContainer;
 
         private ScrollRect _scrollRect;
-        private Transform _beginDragParent;
-        private Block _draggingBlock;
+        private DraggableObject _draggingObject;
         private bool _isDragging;
 
         private void Awake()
@@ -29,32 +28,16 @@ namespace BlockTower
             }
 
             var raycastTarget = eventData.pointerPressRaycast.gameObject;
-            var block = raycastTarget.GetComponentInParent<Block>();
-            if (block == null)
+            var draggingObject = raycastTarget.GetComponentInParent<DraggableObject>();
+            if (draggingObject == null)
             {
                 return;
             }
 
-            _draggingBlock = block;
-            _beginDragParent = _draggingBlock.transform.parent;
-            SetDraggingBlockParent(_draggingObjectContainer);
-            _draggingBlock.SetDraggingColor();
+            _draggingObject = draggingObject;
+            _draggingObject.SetDraggingObjectContainer(_draggingObjectContainer);
+            _draggingObject.OnBeginDrag();
             SetIsDraggingAndChangeScrollActivity(isDragging: true);
-        }
-
-        public void OnEndDrag(PointerEventData eventData)
-        {
-            if (_isDragging == false)
-            {
-                return;
-            }
-
-            SetDraggingBlockParent(_beginDragParent);
-            SetDraggingBlockPosition(eventData.pressPosition);
-            _draggingBlock.ResetColor();
-            _draggingBlock = null;
-
-            SetIsDraggingAndChangeScrollActivity(isDragging: false);
         }
 
         public void OnDrag(PointerEventData eventData)
@@ -64,23 +47,26 @@ namespace BlockTower
                 return;
             }
 
-            SetDraggingBlockPosition(eventData.position);
+            _draggingObject.OnDrag(eventData.position);
+        }
+
+        public void OnEndDrag(PointerEventData eventData)
+        {
+            if (_isDragging == false)
+            {
+                return;
+            }
+
+            _draggingObject.OnEndDrag();
+            _draggingObject = null;
+
+            SetIsDraggingAndChangeScrollActivity(isDragging: false);
         }
 
         private void SetIsDraggingAndChangeScrollActivity(bool isDragging)
         {
             _isDragging = isDragging;
             _scrollRect.horizontal = !_isDragging;
-        }
-
-        private void SetDraggingBlockPosition(Vector2 position)
-        {
-            _draggingBlock.transform.position = position;
-        }
-
-        private void SetDraggingBlockParent(Transform parent)
-        {
-            _draggingBlock.transform.SetParent(parent, true);
         }
     }
 }

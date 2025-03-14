@@ -24,7 +24,7 @@ namespace BlockTower
 
         private void LogInfo(string message)
         {
-            Debug.Log($"[{nameof(name)}] {message}");
+            Debug.Log($"[{name}] {message}");
         }
     }
 }

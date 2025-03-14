@@ -17,10 +17,5 @@ namespace BlockTower
         {
             _image.color = Color.white;
         }
-
-        private void LogInfo(string message)
-        {
-            Debug.Log($"[{name}] {message}");
-        }
     }
 }

@@ -47,7 +47,6 @@ namespace BlockTower
 
             SetIsDraggingAndChangeScrollActivity(false);
             _draggingBlock = null;
-            LogInfo(message: "Drag end");
         }
 
         public void OnDrag(PointerEventData eventData)
@@ -62,11 +61,6 @@ namespace BlockTower
         {
             _isDragging = isDragging;
             _scrollRect.horizontal = !_isDragging;
-        }
-
-        private void LogInfo(string message)
-        {
-            Debug.Log($"[{name}] {message}");
         }
     }
 }

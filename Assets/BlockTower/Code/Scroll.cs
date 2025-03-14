@@ -7,7 +7,11 @@ namespace BlockTower
     [RequireComponent(typeof(ScrollRect))]
     public class Scroll : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandler
     {
+        [SerializeField]
+        private Transform _draggingObjectContainer;
+
         private ScrollRect _scrollRect;
+        private Transform _beginDragParent;
         private Block _draggingBlock;
         private bool _isDragging;
 
@@ -32,8 +36,10 @@ namespace BlockTower
             }
 
             _draggingBlock = block;
+            _beginDragParent = _draggingBlock.transform.parent;
+            SetDraggingBlockParent(_draggingObjectContainer);
             _draggingBlock.SetDraggingColor();
-            SetIsDraggingAndChangeScrollActivity(true);
+            SetIsDraggingAndChangeScrollActivity(isDragging: true);
         }
 
         public void OnEndDrag(PointerEventData eventData)
@@ -43,10 +49,12 @@ namespace BlockTower
                 return;
             }
 
+            SetDraggingBlockParent(_beginDragParent);
+            SetDraggingBlockPosition(eventData.pressPosition);
             _draggingBlock.ResetColor();
-
-            SetIsDraggingAndChangeScrollActivity(false);
             _draggingBlock = null;
+
+            SetIsDraggingAndChangeScrollActivity(isDragging: false);
         }
 
         public void OnDrag(PointerEventData eventData)
@@ -55,12 +63,24 @@ namespace BlockTower
             {
                 return;
             }
+
+            SetDraggingBlockPosition(eventData.position);
         }
 
         private void SetIsDraggingAndChangeScrollActivity(bool isDragging)
         {
             _isDragging = isDragging;
             _scrollRect.horizontal = !_isDragging;
+        }
+
+        private void SetDraggingBlockPosition(Vector2 position)
+        {
+            _draggingBlock.transform.position = position;
+        }
+
+        private void SetDraggingBlockParent(Transform parent)
+        {
+            _draggingBlock.transform.SetParent(parent, true);
         }
     }
 }

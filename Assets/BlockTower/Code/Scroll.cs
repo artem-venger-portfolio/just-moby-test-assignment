@@ -1,12 +1,20 @@
 ﻿using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 namespace BlockTower
 {
+    [RequireComponent(typeof(ScrollRect))]
     public class Scroll : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandler
     {
+        private ScrollRect _scrollRect;
         private Block _draggingBlock;
         private bool _isDragging;
+
+        private void Awake()
+        {
+            _scrollRect = GetComponent<ScrollRect>();
+        }
 
         public void OnBeginDrag(PointerEventData eventData)
         {
@@ -25,7 +33,7 @@ namespace BlockTower
 
             _draggingBlock = block;
             _draggingBlock.SetDraggingColor();
-            _isDragging = true;
+            SetIsDraggingAndChangeScrollActivity(true);
         }
 
         public void OnEndDrag(PointerEventData eventData)
@@ -37,7 +45,7 @@ namespace BlockTower
 
             _draggingBlock.ResetColor();
 
-            _isDragging = false;
+            SetIsDraggingAndChangeScrollActivity(false);
             _draggingBlock = null;
             LogInfo(message: "Drag end");
         }
@@ -48,6 +56,12 @@ namespace BlockTower
             {
                 return;
             }
+        }
+
+        private void SetIsDraggingAndChangeScrollActivity(bool isDragging)
+        {
+            _isDragging = isDragging;
+            _scrollRect.horizontal = !_isDragging;
         }
 
         private void LogInfo(string message)

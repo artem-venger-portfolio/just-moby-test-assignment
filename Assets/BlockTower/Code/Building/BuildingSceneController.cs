@@ -11,6 +11,8 @@ namespace BlockTower.Building
                 new Condition(),
             };
             ITower tower = new Tower(conditions);
+            ISpawner spawner = new Spawner();
+            IBuilder builder = new Builder(tower, spawner);
         }
     }
 }

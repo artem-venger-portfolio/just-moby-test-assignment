@@ -23,6 +23,12 @@
 
         private void BlockSpawnedEventHandler(BlockBase block)
         {
+            block.Dropped += BlockDroppedEventHandler;
+        }
+
+        private void BlockDroppedEventHandler(BlockBase block)
+        {
+            block.Dropped -= BlockDroppedEventHandler;
         }
     }
 }

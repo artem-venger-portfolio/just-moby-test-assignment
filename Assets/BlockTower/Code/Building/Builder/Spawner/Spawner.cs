@@ -1,6 +1,7 @@
 ﻿using System;
 using BlockTower.Building.Update;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 namespace BlockTower.Building
 {
@@ -33,6 +34,7 @@ namespace BlockTower.Building
         {
             if (Input.GetKeyDown(KeyCode.S))
             {
+                Object.Instantiate(_blockTemplate, Input.mousePosition, Quaternion.identity, _blockContainer);
                 Debug.Log(message: "S key down");
             }
         }

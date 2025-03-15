@@ -1,4 +1,5 @@
-﻿using BlockTower.Building.Update;
+﻿using System;
+using BlockTower.Building.Update;
 using UnityEngine;
 
 namespace BlockTower.Building
@@ -16,10 +17,7 @@ namespace BlockTower.Building
         public void Awake()
         {
             var applicationEvents = ApplicationEvents.Create();
-            var conditions = new ICondition[]
-            {
-                new Condition(),
-            };
+            var conditions = Array.Empty<ICondition>();
             ITower tower = new Tower(conditions);
             IBuildingBlocksProvider buildingBlocksProvider = new BuildingBlocksProvider(applicationEvents,
                      _blockTemplate, _blockContainer, tower);

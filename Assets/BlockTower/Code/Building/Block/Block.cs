@@ -1,4 +1,5 @@
 ﻿using System;
+using UnityEngine;
 using UnityEngine.EventSystems;
 
 namespace BlockTower.Building
@@ -8,6 +9,15 @@ namespace BlockTower.Building
         private bool _isFollowingMouse;
 
         public override event Action<BlockBase> Dropped;
+
+        public override Vector3[] GetWorldCorners()
+        {
+            var corners = new Vector3[4];
+            var rectTransform = (RectTransform)transform;
+            rectTransform.GetWorldCorners(corners);
+
+            return corners;
+        }
 
         public override void FollowMouse()
         {

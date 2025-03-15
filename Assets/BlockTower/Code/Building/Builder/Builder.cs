@@ -10,5 +10,19 @@
             _tower = tower;
             _spawner = spawner;
         }
+
+        public void Start()
+        {
+            _spawner.Spawned += BlockSpawnedEventHandler;
+        }
+
+        public void Stop()
+        {
+            _spawner.Spawned -= BlockSpawnedEventHandler;
+        }
+
+        private void BlockSpawnedEventHandler(BlockBase block)
+        {
+        }
     }
 }

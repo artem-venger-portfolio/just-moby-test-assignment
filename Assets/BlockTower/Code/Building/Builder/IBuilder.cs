@@ -2,6 +2,7 @@
 {
     public interface IBuilder
     {
-        
+        void Start();
+        void Stop();
     }
 }

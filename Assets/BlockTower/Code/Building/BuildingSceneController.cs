@@ -4,6 +4,8 @@ namespace BlockTower.Building
 {
     public class BuildingSceneController : MonoBehaviour
     {
+        private IBuilder _builder;
+
         public void Awake()
         {
             var conditions = new ICondition[]
@@ -12,7 +14,17 @@ namespace BlockTower.Building
             };
             ITower tower = new Tower(conditions);
             ISpawner spawner = new Spawner();
-            IBuilder builder = new Builder(tower, spawner);
+            _builder = new Builder(tower, spawner);
+        }
+
+        private void OnEnable()
+        {
+            _builder.Start();
+        }
+
+        private void OnDisable()
+        {
+            _builder.Stop();
         }
     }
 }

@@ -29,6 +29,14 @@
         private void BlockDroppedEventHandler(BlockBase block)
         {
             block.Dropped -= BlockDroppedEventHandler;
+            if (_tower.CanAdd(block))
+            {
+                _tower.Add(block);
+            }
+            else
+            {
+                block.DestroySelf();
+            }
         }
     }
 }

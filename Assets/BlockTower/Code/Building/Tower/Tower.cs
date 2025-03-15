@@ -22,7 +22,7 @@ namespace BlockTower.Building
 
         public void Add(BlockBase block)
         {
-            if (CanAdd(block))
+            if (CanAdd(block) == false)
             {
                 throw new Exception(message: "Can't add block");
             }

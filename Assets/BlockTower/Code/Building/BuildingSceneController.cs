@@ -21,8 +21,9 @@ namespace BlockTower.Building
                 new Condition(),
             };
             ITower tower = new Tower(conditions);
-            ISpawner spawner = new Spawner(applicationEvents, _blockTemplate, _blockContainer);
-            _builder = new Builder(tower, spawner);
+            IBuildingBlocksProvider buildingBlocksProvider = new BuildingBlocksProvider(applicationEvents,
+                     _blockTemplate, _blockContainer, tower);
+            _builder = new Builder(tower, buildingBlocksProvider);
         }
 
         private void OnEnable()

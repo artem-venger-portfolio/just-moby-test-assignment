@@ -15,6 +15,16 @@ namespace BlockTower.Building
             _blocks = new List<BlockBase>();
         }
 
+        public bool IsEmpty()
+        {
+            return _blocks.Count == 0;
+        }
+
+        public BlockBase GetLastBlock()
+        {
+            return _blocks[^1];
+        }
+
         public bool CanAdd(BlockBase block)
         {
             return _conditions.All(c => c.Check(block));

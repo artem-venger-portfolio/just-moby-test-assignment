@@ -8,6 +8,8 @@ namespace BlockTower.Building
     {
         private bool _isFollowingMouse;
 
+        public override RectTransform Transform => (RectTransform)transform;
+
         public override event Action<BlockBase> Dropped;
 
         public override Vector3[] GetWorldCorners()

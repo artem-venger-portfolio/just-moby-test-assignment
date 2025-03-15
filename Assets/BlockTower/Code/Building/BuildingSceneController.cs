@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using BlockTower.Building.Update;
+using UnityEngine;
 
 namespace BlockTower.Building
 {
@@ -8,6 +9,7 @@ namespace BlockTower.Building
 
         public void Awake()
         {
+            var applicationEvents = ApplicationEvents.Create();
             var conditions = new ICondition[]
             {
                 new Condition(),

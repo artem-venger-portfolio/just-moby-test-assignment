@@ -7,10 +7,12 @@ namespace BlockTower.Building
     public class Spawner : ISpawner
     {
         private readonly IApplicationEvents _events;
+        private readonly BlockBase _blockTemplate;
 
-        public Spawner(IApplicationEvents events)
+        public Spawner(IApplicationEvents events, BlockBase blockTemplate)
         {
             _events = events;
+            _blockTemplate = blockTemplate;
         }
 
         public event Action<BlockBase> Spawned;
@@ -29,7 +31,7 @@ namespace BlockTower.Building
         {
             if (Input.GetKeyDown(KeyCode.S))
             {
-                Debug.Log("S key down");
+                Debug.Log(message: "S key down");
             }
         }
     }

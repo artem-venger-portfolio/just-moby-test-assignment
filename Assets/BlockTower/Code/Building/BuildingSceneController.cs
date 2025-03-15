@@ -21,7 +21,8 @@ namespace BlockTower.Building
             tower.AddCondition(new WithinScreenCondition());
             IBuildingBlocksProvider buildingBlocksProvider = new BuildingBlocksProvider(applicationEvents,
                      _blockTemplate, _blockContainer, tower);
-            _builder = new Builder(tower, buildingBlocksProvider);
+            IBuildingBlockPlacer buildingBlockPlacer = new BuildingBlockPlacer(tower);
+            _builder = new Builder(buildingBlocksProvider, buildingBlockPlacer);
         }
 
         private void OnEnable()

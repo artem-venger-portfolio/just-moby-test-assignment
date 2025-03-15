@@ -2,30 +2,30 @@
 {
     public class Builder : IBuilder
     {
-        private readonly ITower _tower;
-        private readonly IBuildingBlocksProvider _buildingBlocksProvider;
+        private readonly IBuildingBlocksProvider _provider;
+        private readonly IBuildingBlockPlacer _placer;
 
-        public Builder(ITower tower, IBuildingBlocksProvider buildingBlocksProvider)
+        public Builder(IBuildingBlocksProvider provider, IBuildingBlockPlacer placer)
         {
-            _tower = tower;
-            _buildingBlocksProvider = buildingBlocksProvider;
+            _provider = provider;
+            _placer = placer;
         }
 
         public void Start()
         {
-            _buildingBlocksProvider.SuitableBlockCreated += BuildingBlockCreatedEventHandler;
-            _buildingBlocksProvider.Start();
+            _provider.SuitableBlockCreated += CreatedEventHandler;
+            _provider.Start();
         }
 
         public void Stop()
         {
-            _buildingBlocksProvider.SuitableBlockCreated -= BuildingBlockCreatedEventHandler;
-            _buildingBlocksProvider.Stop();
+            _provider.SuitableBlockCreated -= CreatedEventHandler;
+            _provider.Stop();
         }
 
-        private void BuildingBlockCreatedEventHandler(BlockBase block)
+        private void CreatedEventHandler(BlockBase block)
         {
-            _tower.Add(block);
+            _placer.Place(block);
         }
     }
 }

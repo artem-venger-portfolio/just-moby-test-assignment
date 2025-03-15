@@ -1,5 +1,6 @@
 ﻿using System;
 using BlockTower.Building.Update;
+using UnityEngine;
 
 namespace BlockTower.Building
 {
@@ -26,6 +27,10 @@ namespace BlockTower.Building
 
         private void UpdateEventHandler()
         {
+            if (Input.GetKeyDown(KeyCode.S))
+            {
+                Debug.Log("S key down");
+            }
         }
     }
 }

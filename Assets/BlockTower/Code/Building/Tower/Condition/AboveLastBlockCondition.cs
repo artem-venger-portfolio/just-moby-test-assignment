@@ -28,7 +28,7 @@
 
             var checkingBlockBottomLeft = checkingBlockCorners[0];
             var checkingBlockBottomRight = checkingBlockCorners[3];
-            var lastBlockTopLeft = lastBlockCorners[0];
+            var lastBlockTopLeft = lastBlockCorners[1];
             var lastBlockTopRight = lastBlockCorners[2];
 
             var checkingBlockBottomY = checkingBlockBottomLeft.y;

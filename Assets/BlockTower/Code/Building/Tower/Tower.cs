@@ -6,14 +6,8 @@ namespace BlockTower.Building
 {
     public class Tower : ITower
     {
-        private readonly IList<ICondition> _conditions;
-        private readonly List<BlockBase> _blocks;
-
-        public Tower(IList<ICondition> conditions)
-        {
-            _conditions = conditions;
-            _blocks = new List<BlockBase>();
-        }
+        private readonly List<ICondition> _conditions = new();
+        private readonly List<BlockBase> _blocks = new();
 
         public bool IsEmpty()
         {
@@ -23,6 +17,11 @@ namespace BlockTower.Building
         public BlockBase GetLastBlock()
         {
             return _blocks[^1];
+        }
+
+        public void AddCondition(ICondition condition)
+        {
+            _conditions.Add(condition);
         }
 
         public bool CanAdd(BlockBase block)

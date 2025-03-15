@@ -18,6 +18,7 @@ namespace BlockTower.Building
             var applicationEvents = ApplicationEvents.Create();
             ITower tower = new Tower();
             tower.AddCondition(new AboveLastBlockCondition(tower));
+            tower.AddCondition(new WithinScreenCondition());
             IBuildingBlocksProvider buildingBlocksProvider = new BuildingBlocksProvider(applicationEvents,
                      _blockTemplate, _blockContainer, tower);
             _builder = new Builder(tower, buildingBlocksProvider);

@@ -8,11 +8,13 @@ namespace BlockTower.Building
     {
         private readonly IApplicationEvents _events;
         private readonly BlockBase _blockTemplate;
+        private readonly Transform _blockContainer;
 
-        public Spawner(IApplicationEvents events, BlockBase blockTemplate)
+        public Spawner(IApplicationEvents events, BlockBase blockTemplate, Transform blockContainer)
         {
             _events = events;
             _blockTemplate = blockTemplate;
+            _blockContainer = blockContainer;
         }
 
         public event Action<BlockBase> Spawned;

@@ -8,6 +8,9 @@ namespace BlockTower.Building
         [SerializeField]
         private BlockBase _blockTemplate;
 
+        [SerializeField]
+        private Transform _blockContainer;
+
         private IBuilder _builder;
 
         public void Awake()
@@ -18,7 +21,7 @@ namespace BlockTower.Building
                 new Condition(),
             };
             ITower tower = new Tower(conditions);
-            ISpawner spawner = new Spawner(applicationEvents, _blockTemplate);
+            ISpawner spawner = new Spawner(applicationEvents, _blockTemplate, _blockContainer);
             _builder = new Builder(tower, spawner);
         }
 

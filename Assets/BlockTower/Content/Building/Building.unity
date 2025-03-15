@@ -242,6 +242,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _blockTemplate: {fileID: 462422453621119127, guid: 01d745a63fdcaa345b50efb8695c760e, type: 3}
+  _blockContainer: {fileID: 1061471457}
 --- !u!1 &1061471453
 GameObject:
   m_ObjectHideFlags: 0

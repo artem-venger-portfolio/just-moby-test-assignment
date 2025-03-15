@@ -2,8 +2,7 @@
 
 namespace BlockTower.Building
 {
-    public class Block : MonoBehaviour
+    public abstract class BlockBase : MonoBehaviour
     {
-        
     }
 }

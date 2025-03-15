@@ -1,7 +1,6 @@
 ﻿namespace BlockTower.Building
 {
-    public class Tower
+    public class Block : BlockBase
     {
-        
     }
 }

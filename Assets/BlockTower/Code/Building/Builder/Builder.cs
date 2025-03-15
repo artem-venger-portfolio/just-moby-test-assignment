@@ -14,11 +14,13 @@
         public void Start()
         {
             _spawner.Spawned += BlockSpawnedEventHandler;
+            _spawner.Start();
         }
 
         public void Stop()
         {
             _spawner.Spawned -= BlockSpawnedEventHandler;
+            _spawner.Stop();
         }
 
         private void BlockSpawnedEventHandler(BlockBase block)

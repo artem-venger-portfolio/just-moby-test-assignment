@@ -13,5 +13,19 @@ namespace BlockTower.Building
         }
 
         public event Action<BlockBase> Spawned;
+
+        public void Start()
+        {
+            _events.Updated += UpdateEventHandler;
+        }
+
+        public void Stop()
+        {
+            _events.Updated -= UpdateEventHandler;
+        }
+
+        private void UpdateEventHandler()
+        {
+        }
     }
 }

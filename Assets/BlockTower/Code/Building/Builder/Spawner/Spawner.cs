@@ -10,6 +10,7 @@ namespace BlockTower.Building
         private readonly IApplicationEvents _events;
         private readonly BlockBase _blockTemplate;
         private readonly Transform _blockContainer;
+        private BlockBase _currentBlock;
 
         public Spawner(IApplicationEvents events, BlockBase blockTemplate, Transform blockContainer)
         {
@@ -32,11 +33,23 @@ namespace BlockTower.Building
 
         private void UpdateEventHandler()
         {
+            if (_currentBlock.IsNullRef() == false)
+            {
+                return;
+            }
+
             if (Input.GetKeyDown(KeyCode.S))
             {
-                Object.Instantiate(_blockTemplate, Input.mousePosition, Quaternion.identity, _blockContainer);
-                Debug.Log(message: "S key down");
+                _currentBlock = Object.Instantiate(_blockTemplate, Input.mousePosition, Quaternion.identity,
+                                                   _blockContainer);
+                _currentBlock.Dropped += CurrentBlockDroppedEventHandler;
             }
+        }
+
+        private void CurrentBlockDroppedEventHandler(BlockBase block)
+        {
+            _currentBlock.Dropped -= CurrentBlockDroppedEventHandler;
+            _currentBlock = null;
         }
     }
 }

@@ -43,6 +43,7 @@ namespace BlockTower.Building
                 _currentBlock = Object.Instantiate(_blockTemplate, Input.mousePosition, Quaternion.identity,
                                                    _blockContainer);
                 _currentBlock.Dropped += CurrentBlockDroppedEventHandler;
+                _currentBlock.FollowMouse();
             }
         }
 

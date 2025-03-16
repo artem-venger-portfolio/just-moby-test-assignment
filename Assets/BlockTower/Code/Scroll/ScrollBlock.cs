@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using JetBrains.Annotations;
+using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
 
@@ -13,8 +14,9 @@ namespace BlockTower
         {
             _image.color = color;
         }
-        
-        public class Factory : PlaceholderFactory<ScrollBlock, Color>
+
+        [UsedImplicitly]
+        public class Factory : PlaceholderFactory<ScrollBlock>
         {
         }
     }

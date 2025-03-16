@@ -11,6 +11,12 @@ namespace BlockTower
         [SerializeField]
         private ScrollBase _scroll;
 
+        [SerializeField]
+        private ScrollBlock _scrollBlockTemplate;
+
+        [SerializeField]
+        private Transform _scrollContent;
+
         private void Awake()
         {
             IConfigLoader configLoader = new SOConfigLoader();
@@ -26,7 +32,7 @@ namespace BlockTower
 
         private void RunContext(IGameConfig config)
         {
-            var gameInstaller = new GameInstaller(config);
+            var gameInstaller = new GameInstaller(config, _scrollBlockTemplate, _scrollContent);
             _context.AddNormalInstaller(gameInstaller);
             _context.Run();
         }

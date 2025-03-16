@@ -9,14 +9,16 @@ namespace BlockTower
         private readonly ScrollBlock _scrollBlockTemplate;
         private readonly Transform _scrollContent;
         private readonly Canvas _canvas;
+        private readonly ScrollBase _scroll;
 
         public GameInstaller(IGameConfig config, ScrollBlock scrollBlockTemplate, Transform scrollContent,
-                             Canvas canvas)
+                             Canvas canvas, ScrollBase scroll)
         {
             _config = config;
             _scrollBlockTemplate = scrollBlockTemplate;
             _scrollContent = scrollContent;
             _canvas = canvas;
+            _scroll = scroll;
         }
 
         public override void InstallBindings()
@@ -43,6 +45,11 @@ namespace BlockTower
                      .NonLazy();
 
             Container.Bind<UIUtility>()
+                     .AsSingle()
+                     .NonLazy();
+
+            Container.Bind<ScrollBase>()
+                     .FromInstance(_scroll)
                      .AsSingle()
                      .NonLazy();
         }

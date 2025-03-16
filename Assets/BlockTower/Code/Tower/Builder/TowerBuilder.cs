@@ -18,11 +18,12 @@ namespace BlockTower
         private readonly List<IBuildCondition> _conditions;
         private readonly ITower _tower;
         private readonly IDestructionAnimator _destructionAnimator;
+        private readonly Canvas _canvas;
         private IDisposable _eventSubscription;
 
         public TowerBuilder(ScrollBase scroll, IProjectLogger logger, DropZone towerDropZone,
                             TowerBlockFactory blockFactory, List<IBuildCondition> conditions, ITower tower,
-                            IDestructionAnimator destructionAnimator)
+                            IDestructionAnimator destructionAnimator, Canvas canvas)
         {
             _scroll = scroll;
             _logger = logger;
@@ -31,6 +32,7 @@ namespace BlockTower
             _conditions = conditions;
             _tower = tower;
             _destructionAnimator = destructionAnimator;
+            _canvas = canvas;
         }
 
         public void Start()
@@ -106,10 +108,10 @@ namespace BlockTower
             var lastBlock = _tower.GetLastBlock();
             var lastBlockTransform = lastBlock.Transform;
             var lastBlockPosition = lastBlockTransform.position;
-            var lastBlockDistanceToTop = lastBlockTransform.rect.yMax;
+            var lastBlockDistanceToTop = lastBlockTransform.rect.yMax * _canvas.scaleFactor;
             var lastBlockTopY = lastBlockPosition.y + lastBlockDistanceToTop;
 
-            var placingBlockDistanceToBottom = placingBlock.Transform.rect.xMin;
+            var placingBlockDistanceToBottom = placingBlock.Transform.rect.xMin * _canvas.scaleFactor;
 
             var targetX = screenPoint.x;
             var targetY = lastBlockTopY - placingBlockDistanceToBottom;

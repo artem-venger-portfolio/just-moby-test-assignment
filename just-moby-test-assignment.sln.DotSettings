@@ -60,7 +60,7 @@
                 &lt;/And&gt;
             &lt;/Entry.Match&gt;
             &lt;Entry.SortBy&gt;
-                &lt;Kind Order="Field Autoproperty Property Event Method" /&gt;
+                &lt;Kind Order="Field Autoproperty Property Indexer Event Method" /&gt;
             &lt;/Entry.SortBy&gt;
         &lt;/Entry&gt;
         &lt;Entry DisplayName="Private Members"&gt;
@@ -254,7 +254,7 @@
                 &lt;/And&gt;
             &lt;/Entry.Match&gt;
             &lt;Entry.SortBy&gt;
-                &lt;Kind Order="Field Autoproperty Property Event Method" /&gt;
+                &lt;Kind Order="Field Autoproperty Property Indexer Event Method" /&gt;
             &lt;/Entry.SortBy&gt;
         &lt;/Entry&gt;
         

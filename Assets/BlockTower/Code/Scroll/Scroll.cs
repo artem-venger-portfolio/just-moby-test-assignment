@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using Zenject;
@@ -16,7 +17,7 @@ namespace BlockTower
         private IGameConfig _config;
         private IProjectLogger _logger;
         private ScrollBlock.Factory _blockFactory;
-        private DraggableObject _draggingObject;
+        private ScrollBlock _draggingBlock;
         private bool _isDragging;
         private ScrollBlock[] _blocks;
 
@@ -30,6 +31,7 @@ namespace BlockTower
                 var currentColor = colors[i];
                 var currentBlock = _blockFactory.Create();
                 currentBlock.SetColor(currentColor);
+                currentBlock.SetDraggingObjectContainer(_draggingObjectContainer);
                 _blocks[i] = currentBlock;
             }
         }
@@ -50,16 +52,14 @@ namespace BlockTower
                 return;
             }
 
-            var raycastTarget = eventData.pointerPressRaycast.gameObject;
-            var draggingObject = raycastTarget.GetComponentInParent<DraggableObject>();
-            if (draggingObject == null)
+            var screenPoint = eventData.pressPosition;
+            if (HasBlockAtScreenPoint(screenPoint) == false)
             {
                 return;
             }
 
-            _draggingObject = draggingObject;
-            _draggingObject.SetDraggingObjectContainer(_draggingObjectContainer);
-            _draggingObject.OnBeginDrag();
+            _draggingBlock = GetBlockAtScreenPoint(screenPoint);
+            _draggingBlock.OnBeginDrag();
             SetIsDraggingAndChangeScrollActivity(isDragging: true);
         }
 
@@ -70,7 +70,7 @@ namespace BlockTower
                 return;
             }
 
-            _draggingObject.OnDrag(eventData.position);
+            _draggingBlock.OnDrag(eventData.position);
         }
 
         void IEndDragHandler.OnEndDrag(PointerEventData eventData)
@@ -80,10 +80,36 @@ namespace BlockTower
                 return;
             }
 
-            _draggingObject.OnEndDrag();
-            _draggingObject = null;
+            _draggingBlock.OnEndDrag();
+            _draggingBlock = null;
 
             SetIsDraggingAndChangeScrollActivity(isDragging: false);
+        }
+
+        private bool HasBlockAtScreenPoint(Vector2 screenPoint)
+        {
+            foreach (var currentBlock in _blocks)
+            {
+                if (currentBlock.IsAtScreenPoint(screenPoint))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        private ScrollBlock GetBlockAtScreenPoint(Vector2 screenPoint)
+        {
+            foreach (var currentBlock in _blocks)
+            {
+                if (currentBlock.IsAtScreenPoint(screenPoint))
+                {
+                    return currentBlock;
+                }
+            }
+
+            throw new Exception($"Can't find block at screen point {screenPoint.ToString()}");
         }
 
         private void SetIsDraggingAndChangeScrollActivity(bool isDragging)

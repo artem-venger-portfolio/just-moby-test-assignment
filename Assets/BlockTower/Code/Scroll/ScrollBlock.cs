@@ -20,6 +20,11 @@ namespace BlockTower
             _image.color = color;
         }
 
+        public void SetDraggingObjectContainer(Transform container)
+        {
+            _draggableObject.SetDraggingObjectContainer(container);
+        }
+
         public bool IsAtScreenPoint(Vector2 screenPoint)
         {
             return _uiUtility.RectangleContainsScreenPoint(Transform, screenPoint);

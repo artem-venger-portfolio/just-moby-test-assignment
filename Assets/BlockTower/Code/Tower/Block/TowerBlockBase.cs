@@ -16,5 +16,7 @@ namespace BlockTower
             get => _image.color;
             set => _image.color = value;
         }
+
+        public abstract Vector3[] GetWorldCorners();
     }
 }

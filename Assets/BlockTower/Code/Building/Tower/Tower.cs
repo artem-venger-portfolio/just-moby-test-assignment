@@ -9,6 +9,10 @@ namespace BlockTower.Building
         private readonly List<ICondition> _conditions = new();
         private readonly List<BlockBase> _blocks = new();
 
+        public int Count => _blocks.Count;
+
+        public BlockBase this[int i] => _blocks[i];
+
         public bool IsEmpty()
         {
             return _blocks.Count == 0;
@@ -43,7 +47,5 @@ namespace BlockTower.Building
         {
             _blocks.Remove(block);
         }
-
-        public BlockBase this[int i] => _blocks[i];
     }
 }

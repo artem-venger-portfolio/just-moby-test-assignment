@@ -173,6 +173,7 @@ MonoBehaviour:
   _canvas: {fileID: 3110965548874491736}
   _towerDropZone: {fileID: 1664942846}
   _holeDropZone: {fileID: 1831530860}
+  _towerBlock: {fileID: 8932849907055226627, guid: c0987fd91419d664d85a22dcbd458877, type: 3}
 --- !u!1 &730605268
 GameObject:
   m_ObjectHideFlags: 0

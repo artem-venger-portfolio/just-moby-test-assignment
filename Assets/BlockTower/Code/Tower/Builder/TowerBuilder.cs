@@ -10,13 +10,16 @@ namespace BlockTower
         private readonly ScrollBase _scroll;
         private readonly IProjectLogger _logger;
         private readonly DropZone _towerDropZone;
+        private readonly TowerBlockFactory _blockFactory;
         private IDisposable _eventSubscription;
 
-        public TowerBuilder(ScrollBase scroll, IProjectLogger logger, DropZone towerDropZone)
+        public TowerBuilder(ScrollBase scroll, IProjectLogger logger, DropZone towerDropZone,
+                            TowerBlockFactory blockFactory)
         {
             _scroll = scroll;
             _logger = logger;
             _towerDropZone = towerDropZone;
+            _blockFactory = blockFactory;
         }
 
         public void Start()
@@ -48,6 +51,9 @@ namespace BlockTower
         private void PlaceBlock(DropData data)
         {
             LogInfo(nameof(PlaceBlock));
+            var block = _blockFactory.Create();
+            block.transform.position = data.ScreenPoint;
+            block.Color = data.Color;
         }
 
         private void DestroyBlock(DropData data)

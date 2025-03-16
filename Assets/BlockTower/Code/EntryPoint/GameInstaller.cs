@@ -11,9 +11,10 @@ namespace BlockTower
         private readonly Canvas _canvas;
         private readonly ScrollBase _scroll;
         private readonly DropZone _towerDropZone;
+        private readonly TowerBlockBase _towerBlock;
 
         public GameInstaller(IGameConfig config, ScrollBlock scrollBlockTemplate, Transform scrollContent,
-                             Canvas canvas, ScrollBase scroll, DropZone towerDropZone)
+                             Canvas canvas, ScrollBase scroll, DropZone towerDropZone, TowerBlockBase towerBlock)
         {
             _config = config;
             _scrollBlockTemplate = scrollBlockTemplate;
@@ -21,6 +22,7 @@ namespace BlockTower
             _canvas = canvas;
             _scroll = scroll;
             _towerDropZone = towerDropZone;
+            _towerBlock = towerBlock;
         }
 
         public override void InstallBindings()
@@ -63,6 +65,12 @@ namespace BlockTower
 
             Container.Bind<ITower>()
                      .To<Tower>()
+                     .AsSingle()
+                     .NonLazy();
+
+            Container.BindFactory<TowerBlockBase, TowerBlockFactory>()
+                     .FromComponentInNewPrefab(_towerBlock)
+                     .UnderTransform(_towerDropZone.transform)
                      .AsSingle()
                      .NonLazy();
         }

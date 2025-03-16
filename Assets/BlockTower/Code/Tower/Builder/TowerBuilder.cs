@@ -10,7 +10,7 @@ namespace BlockTower.Tower.Builder
         private readonly ScrollBase _scroll;
         private readonly IProjectLogger _logger;
         private readonly DropZone _towerDropZone;
-        private IDisposable _scrollSubscription;
+        private IDisposable _eventSubscription;
 
         public TowerBuilder(ScrollBase scroll, IProjectLogger logger, DropZone towerDropZone)
         {
@@ -21,18 +21,38 @@ namespace BlockTower.Tower.Builder
 
         public void Start()
         {
-            _scrollSubscription = _scroll.BlockDropped.Subscribe(BlockDroppedEventHandler);
+            _eventSubscription = _scroll.BlockDropped.Subscribe(data =>
+            {
+                if (CanPlaceBlock(data))
+                {
+                    PlaceBlock(data);
+                }
+                else
+                {
+                    DestroyBlock(data);
+                }
+            });
         }
 
         public void Stop()
         {
-            _scrollSubscription.Dispose();
-            _scrollSubscription = null;
+            _eventSubscription.Dispose();
+            _eventSubscription = null;
         }
 
-        private void BlockDroppedEventHandler(DropData dropData)
+        private bool CanPlaceBlock(DropData data)
         {
-            LogInfo(nameof(BlockDroppedEventHandler));
+            return _towerDropZone.IsInZone(data.ScreenPoint);
+        }
+
+        private void PlaceBlock(DropData data)
+        {
+            LogInfo(nameof(PlaceBlock));
+        }
+
+        private void DestroyBlock(DropData data)
+        {
+            LogInfo(nameof(DestroyBlock));
         }
 
         private void LogInfo(string message)

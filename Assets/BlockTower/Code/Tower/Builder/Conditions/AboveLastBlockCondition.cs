@@ -36,11 +36,15 @@ namespace BlockTower
             var lastBlockTopY = lastBlockTopLeft.y;
             var isCheckingBlockBottomHigherThanLastBlockTop = checkingBlockBottomY >= lastBlockTopY;
 
-            var checkingBlockCenterX = (checkingBlockBottomLeft.x + checkingBlockBottomRight.x) / 2;
-            var isCheckingBlockCenterWithinLastBlockWidth = checkingBlockCenterX >= lastBlockTopLeft.x &&
-                                                            checkingBlockCenterX <= lastBlockTopRight.x;
+            var isCheckingBlockWidthAndLastBlockWidthIntersects = RangesIntersect(checkingBlockBottomLeft.x,
+                     checkingBlockBottomRight.x, lastBlockTopLeft.x, lastBlockTopRight.x);
 
-            return isCheckingBlockBottomHigherThanLastBlockTop && isCheckingBlockCenterWithinLastBlockWidth;
+            return isCheckingBlockBottomHigherThanLastBlockTop && isCheckingBlockWidthAndLastBlockWidthIntersects;
+        }
+
+        private static bool RangesIntersect(float x1, float x2, float y1, float y2)
+        {
+            return x1 <= y2 && y1 <= x2;
         }
     }
 }

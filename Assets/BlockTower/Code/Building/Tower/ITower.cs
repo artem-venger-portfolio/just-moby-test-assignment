@@ -8,5 +8,7 @@
         void Remove(BlockBase block);
         BlockBase GetLastBlock();
         bool IsEmpty();
+
+        BlockBase this[int i] { get; }
     }
 }

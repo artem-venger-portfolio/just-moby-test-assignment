@@ -43,5 +43,7 @@ namespace BlockTower.Building
         {
             _blocks.Remove(block);
         }
+
+        public BlockBase this[int i] => _blocks[i];
     }
 }

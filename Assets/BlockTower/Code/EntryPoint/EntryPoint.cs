@@ -21,6 +21,12 @@ namespace BlockTower
         [SerializeField]
         private Canvas _canvas;
 
+        [SerializeField]
+        private DropZone _towerDropZone;
+
+        [SerializeField]
+        private DropZone _holeDropZone;
+
         private ITowerBuilder _towerBuilder;
 
         private void Awake()

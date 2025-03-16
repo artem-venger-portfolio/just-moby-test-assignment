@@ -170,6 +170,7 @@ MonoBehaviour:
   _scroll: {fileID: 5999570620752269756}
   _scrollBlockTemplate: {fileID: 826004755066465991, guid: e5137690a0cb1204fb0f68bef2f6ceb2, type: 3}
   _scrollContent: {fileID: 2719339083902534203}
+  _canvas: {fileID: 3110965548874491736}
 --- !u!1 &730605268
 GameObject:
   m_ObjectHideFlags: 0

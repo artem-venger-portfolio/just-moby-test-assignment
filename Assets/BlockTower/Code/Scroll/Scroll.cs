@@ -21,7 +21,7 @@ namespace BlockTower
 
         private void LogInfo(string message)
         {
-            _logger.LogInfo($"[{nameof(Scroll)}] {message}");
+            _logger.LogInfo(message, nameof(Scroll));
         }
     }
 }

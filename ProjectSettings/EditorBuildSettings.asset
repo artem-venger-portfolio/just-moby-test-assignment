@@ -4,5 +4,8 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/BlockTower/Content/BlockTower.unity
+    guid: 3a13b6665be89d64aad275f19e3f7d25
   m_configObjects: {}

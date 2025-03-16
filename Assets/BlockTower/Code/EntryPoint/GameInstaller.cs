@@ -58,36 +58,45 @@ namespace BlockTower
                      .NonLazy();
 
             Container.Bind<ITowerBuilder>()
-                     .To<TowerBuilder>()
+                     .FromSubContainerResolve()
+                     .ByMethod(InstallTowerBuilder)
                      .AsSingle()
-                     .WithArguments(_towerDropZone)
                      .NonLazy();
 
             Container.Bind<ITower>()
                      .To<Tower>()
                      .AsSingle()
                      .NonLazy();
+        }
 
-            Container.BindFactory<TowerBlockBase, TowerBlockFactory>()
-                     .FromComponentInNewPrefab(_towerBlock)
-                     .UnderTransform(_towerDropZone.transform)
-                     .AsSingle()
-                     .NonLazy();
+        private void InstallTowerBuilder(DiContainer subContainer)
+        {
+            subContainer.Bind<ITowerBuilder>()
+                        .To<TowerBuilder>()
+                        .AsSingle()
+                        .WithArguments(_towerDropZone)
+                        .NonLazy();
 
-            Container.Bind<IBuildCondition>()
-                     .To(typeof(WithinScreenCondition), typeof(AboveLastBlockCondition))
-                     .AsTransient()
-                     .NonLazy();
+            subContainer.BindFactory<TowerBlockBase, TowerBlockFactory>()
+                        .FromComponentInNewPrefab(_towerBlock)
+                        .UnderTransform(_towerDropZone.transform)
+                        .AsSingle()
+                        .NonLazy();
 
-            Container.Bind<IDestructionAnimator>()
-                     .To<DestructionAnimator>()
-                     .AsSingle()
-                     .NonLazy();
+            subContainer.Bind<IBuildCondition>()
+                        .To(typeof(WithinScreenCondition), typeof(AboveLastBlockCondition))
+                        .AsTransient()
+                        .NonLazy();
 
-            Container.Bind<IPlacementAnimator>()
-                     .To<PlacementAnimator>()
-                     .AsSingle()
-                     .NonLazy();
+            subContainer.Bind<IDestructionAnimator>()
+                        .To<DestructionAnimator>()
+                        .AsSingle()
+                        .NonLazy();
+
+            subContainer.Bind<IPlacementAnimator>()
+                        .To<PlacementAnimator>()
+                        .AsSingle()
+                        .NonLazy();
         }
     }
 }

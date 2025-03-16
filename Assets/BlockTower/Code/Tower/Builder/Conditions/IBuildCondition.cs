@@ -2,6 +2,6 @@
 {
     public interface IBuildCondition
     {
-        bool CanBuild();
+        bool CanBuild(BuildConditionData data);
     }
 }

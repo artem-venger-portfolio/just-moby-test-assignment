@@ -78,6 +78,16 @@ namespace BlockTower
                      .To(typeof(WithinScreenCondition), typeof(AboveLastBlockCondition))
                      .AsTransient()
                      .NonLazy();
+
+            Container.Bind<IDestructionAnimator>()
+                     .To<DestructionAnimator>()
+                     .AsSingle()
+                     .NonLazy();
+
+            Container.Bind<IPlacementAnimator>()
+                     .To<PlacementAnimator>()
+                     .AsSingle()
+                     .NonLazy();
         }
     }
 }

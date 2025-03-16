@@ -138,3 +138,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _image: {fileID: 233166085477737822}
+  _draggableObject: {fileID: 7046536144341261873}

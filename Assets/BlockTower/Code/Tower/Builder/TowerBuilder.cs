@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using JetBrains.Annotations;
 using R3;
 
@@ -11,15 +13,17 @@ namespace BlockTower
         private readonly IProjectLogger _logger;
         private readonly DropZone _towerDropZone;
         private readonly TowerBlockFactory _blockFactory;
+        private readonly List<IBuildCondition> _conditions;
         private IDisposable _eventSubscription;
 
         public TowerBuilder(ScrollBase scroll, IProjectLogger logger, DropZone towerDropZone,
-                            TowerBlockFactory blockFactory)
+                            TowerBlockFactory blockFactory, List<IBuildCondition> conditions)
         {
             _scroll = scroll;
             _logger = logger;
             _towerDropZone = towerDropZone;
             _blockFactory = blockFactory;
+            _conditions = conditions;
         }
 
         public void Start()
@@ -45,7 +49,16 @@ namespace BlockTower
 
         private bool CanPlaceBlock(DropData data)
         {
-            return _towerDropZone.IsInZone(data.ScreenPoint);
+            var isInZone = _towerDropZone.IsInZone(data.ScreenPoint);
+            if (isInZone == false)
+            {
+                return false;
+            }
+
+            var conditionData = new BuildConditionData(data.WorldCorners);
+            var allConditionsMet = _conditions.All(c => c.CanBuild(conditionData));
+
+            return allConditionsMet;
         }
 
         private void PlaceBlock(DropData data)

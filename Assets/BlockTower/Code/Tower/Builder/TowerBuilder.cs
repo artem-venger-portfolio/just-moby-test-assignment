@@ -14,16 +14,18 @@ namespace BlockTower
         private readonly DropZone _towerDropZone;
         private readonly TowerBlockFactory _blockFactory;
         private readonly List<IBuildCondition> _conditions;
+        private readonly ITower _tower;
         private IDisposable _eventSubscription;
 
         public TowerBuilder(ScrollBase scroll, IProjectLogger logger, DropZone towerDropZone,
-                            TowerBlockFactory blockFactory, List<IBuildCondition> conditions)
+                            TowerBlockFactory blockFactory, List<IBuildCondition> conditions, ITower tower)
         {
             _scroll = scroll;
             _logger = logger;
             _towerDropZone = towerDropZone;
             _blockFactory = blockFactory;
             _conditions = conditions;
+            _tower = tower;
         }
 
         public void Start()
@@ -67,6 +69,7 @@ namespace BlockTower
             var block = _blockFactory.Create();
             block.transform.position = data.ScreenPoint;
             block.Color = data.Color;
+            _tower.Add(block);
         }
 
         private void DestroyBlock(DropData data)

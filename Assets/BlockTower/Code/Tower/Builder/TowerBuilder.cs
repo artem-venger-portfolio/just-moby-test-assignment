@@ -2,7 +2,7 @@
 using JetBrains.Annotations;
 using R3;
 
-namespace BlockTower.Tower.Builder
+namespace BlockTower
 {
     [UsedImplicitly]
     public class TowerBuilder : ITowerBuilder

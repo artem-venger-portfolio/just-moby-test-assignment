@@ -1,4 +1,4 @@
-﻿namespace BlockTower.Tower.Builder
+﻿namespace BlockTower
 {
     public interface ITowerBuilder
     {

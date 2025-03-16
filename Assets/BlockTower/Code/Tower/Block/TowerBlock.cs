@@ -17,11 +17,13 @@ namespace BlockTower
             set => _image.color = value;
         }
 
+        public override Image Image => _image;
+
+        public override RectTransform Transform => (RectTransform)transform;
+
         public override Vector3[] GetWorldCorners()
         {
             return Transform.GetWorldCorners();
         }
-
-        private RectTransform Transform => (RectTransform)transform;
     }
 }

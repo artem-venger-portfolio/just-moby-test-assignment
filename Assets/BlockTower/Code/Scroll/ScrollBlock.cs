@@ -46,6 +46,11 @@ namespace BlockTower
             _draggableObject.OnEndDrag();
         }
 
+        public Vector3[] GetWorldCorners()
+        {
+            return _draggableObject.GetWorldCorners();
+        }
+
         private RectTransform Transform => (RectTransform)transform;
 
         [Inject]

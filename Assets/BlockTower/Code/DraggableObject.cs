@@ -31,6 +31,11 @@ namespace BlockTower
             Position = _beginDragPosition;
         }
 
+        public Vector3[] GetWorldCorners()
+        {
+            return ((RectTransform)transform).GetWorldCorners();
+        }
+
         private Transform Parent
         {
             get => transform.parent;

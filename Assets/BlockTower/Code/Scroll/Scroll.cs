@@ -84,13 +84,13 @@ namespace BlockTower
                 return;
             }
 
-            var dropData = new DropData(eventData.position, _draggingBlock.Color);
-            
+            var dropData = new DropData(eventData.position, _draggingBlock.Color, _draggingBlock.GetWorldCorners());
+
             _draggingBlock.OnEndDrag();
             _draggingBlock = null;
 
             SetIsDraggingAndChangeScrollActivity(isDragging: false);
-            
+
             _blockDroppedSubject.OnNext(dropData);
         }
 

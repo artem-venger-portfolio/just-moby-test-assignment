@@ -10,7 +10,7 @@ namespace BlockTower
         public void Load(Action<IGameConfig> completed)
         {
             _completed = completed;
-            var request = Resources.LoadAsync<TextAsset>(path: "GameConfig");
+            var request = Resources.LoadAsync<TextAsset>(path: "TextGameConfig");
             request.completed += TextAssetLoaded;
         }
 

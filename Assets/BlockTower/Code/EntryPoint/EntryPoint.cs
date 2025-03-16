@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using BlockTower.Tower.Builder;
+using UnityEngine;
 using Zenject;
 
 namespace BlockTower
@@ -20,10 +21,18 @@ namespace BlockTower
         [SerializeField]
         private Canvas _canvas;
 
+        private ITowerBuilder _towerBuilder;
+
         private void Awake()
         {
             IConfigLoader configLoader = new SOConfigLoader();
             configLoader.Load(ConfigLoadedEventHandler);
+        }
+
+        [Inject]
+        private void InjectDependencies(ITowerBuilder towerBuilder)
+        {
+            _towerBuilder = towerBuilder;
         }
 
         private void ConfigLoadedEventHandler(IGameConfig config)
@@ -43,6 +52,7 @@ namespace BlockTower
         private void InitializeGame()
         {
             _scroll.CreateBlocks();
+            _towerBuilder.Start();
         }
     }
 }

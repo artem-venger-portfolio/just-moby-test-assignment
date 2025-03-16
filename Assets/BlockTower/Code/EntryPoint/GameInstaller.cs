@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using BlockTower.Tower.Builder;
+using UnityEngine;
 using Zenject;
 
 namespace BlockTower
@@ -50,6 +51,11 @@ namespace BlockTower
 
             Container.Bind<ScrollBase>()
                      .FromInstance(_scroll)
+                     .AsSingle()
+                     .NonLazy();
+
+            Container.Bind<ITowerBuilder>()
+                     .To<TowerBuilder>()
                      .AsSingle()
                      .NonLazy();
         }

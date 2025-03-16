@@ -12,6 +12,7 @@ namespace BlockTower.Building
         private Transform _blockContainer;
 
         private IBuilder _builder;
+        private IRemover _remover;
 
         public void Awake()
         {
@@ -23,16 +24,20 @@ namespace BlockTower.Building
                      _blockTemplate, _blockContainer, tower);
             IBuildingBlockPlacer buildingBlockPlacer = new BuildingBlockPlacer(tower);
             _builder = new Builder(buildingBlocksProvider, buildingBlockPlacer);
+
+            _remover = new Remover(applicationEvents, tower);
         }
 
         private void OnEnable()
         {
             _builder.Start();
+            _remover.Start();
         }
 
         private void OnDisable()
         {
             _builder.Stop();
+            _remover.Stop();
         }
     }
 }

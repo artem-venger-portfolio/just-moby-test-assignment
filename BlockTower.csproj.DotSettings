@@ -6,5 +6,6 @@
 	<s:Boolean x:Key="/Default/CodeInspection/NamespaceProvider/NamespaceFoldersToSkip/=assets_005Cblocktower_005Ccode_005Cbuilding_005Cbuilder_005Cbuildingblocksprovider/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/CodeInspection/NamespaceProvider/NamespaceFoldersToSkip/=assets_005Cblocktower_005Ccode_005Cbuilding_005Cbuilder_005Cspawner/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/CodeInspection/NamespaceProvider/NamespaceFoldersToSkip/=assets_005Cblocktower_005Ccode_005Cbuilding_005Ccondition/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/CodeInspection/NamespaceProvider/NamespaceFoldersToSkip/=assets_005Cblocktower_005Ccode_005Cbuilding_005Cremover/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/CodeInspection/NamespaceProvider/NamespaceFoldersToSkip/=assets_005Cblocktower_005Ccode_005Cbuilding_005Ctower/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/CodeInspection/NamespaceProvider/NamespaceFoldersToSkip/=assets_005Cblocktower_005Ccode_005Cbuilding_005Ctower_005Ccondition/@EntryIndexedValue">True</s:Boolean></wpf:ResourceDictionary>

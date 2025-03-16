@@ -60,6 +60,11 @@ namespace BlockTower
                      .AsSingle()
                      .WithArguments(_towerDropZone)
                      .NonLazy();
+
+            Container.Bind<ITower>()
+                     .To<Tower>()
+                     .AsSingle()
+                     .NonLazy();
         }
     }
 }

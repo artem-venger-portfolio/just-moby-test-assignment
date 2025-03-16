@@ -15,9 +15,10 @@ namespace BlockTower
 
         private UIUtility _uiUtility;
 
-        public void SetColor(Color color)
+        public Color Color
         {
-            _image.color = color;
+            get => _image.color;
+            set => _image.color = value;
         }
 
         public void SetDraggingObjectContainer(Transform container)

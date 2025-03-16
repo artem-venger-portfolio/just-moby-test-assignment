@@ -1,4 +1,5 @@
 ﻿using System;
+using R3;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -14,12 +15,15 @@ namespace BlockTower
         [SerializeField]
         private ScrollRect _scrollRect;
 
+        private readonly Subject<DropData> _blockDroppedSubject = new();
         private IGameConfig _config;
         private IProjectLogger _logger;
         private ScrollBlock.Factory _blockFactory;
         private ScrollBlock _draggingBlock;
         private bool _isDragging;
         private ScrollBlock[] _blocks;
+
+        public override Observable<DropData> BlockDropped => _blockDroppedSubject;
 
         public override void CreateBlocks()
         {
@@ -30,7 +34,7 @@ namespace BlockTower
             {
                 var currentColor = colors[i];
                 var currentBlock = _blockFactory.Create();
-                currentBlock.SetColor(currentColor);
+                currentBlock.Color = currentColor;
                 currentBlock.SetDraggingObjectContainer(_draggingObjectContainer);
                 _blocks[i] = currentBlock;
             }
@@ -80,10 +84,14 @@ namespace BlockTower
                 return;
             }
 
+            var dropData = new DropData(eventData.position, _draggingBlock.Color);
+            
             _draggingBlock.OnEndDrag();
             _draggingBlock = null;
 
             SetIsDraggingAndChangeScrollActivity(isDragging: false);
+            
+            _blockDroppedSubject.OnNext(dropData);
         }
 
         private bool HasBlockAtScreenPoint(Vector2 screenPoint)
@@ -121,6 +129,11 @@ namespace BlockTower
         private void LogInfo(string message)
         {
             _logger.LogInfo(message, nameof(Scroll));
+        }
+
+        private void OnDestroy()
+        {
+            _blockDroppedSubject.Dispose();
         }
     }
 }

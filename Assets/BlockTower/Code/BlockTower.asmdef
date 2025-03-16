@@ -13,7 +13,8 @@
   "allowUnsafeCode": false,
   "overrideReferences": true,
   "precompiledReferences": [
-    "Zenject-usage.dll"
+    "Zenject-usage.dll",
+    "R3.dll"
   ],
   "autoReferenced": false,
   "defineConstraints": [],

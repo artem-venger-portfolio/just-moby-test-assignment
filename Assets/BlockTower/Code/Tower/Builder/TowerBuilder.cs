@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using DG.Tweening;
 using JetBrains.Annotations;
 using R3;
 
@@ -15,10 +16,12 @@ namespace BlockTower
         private readonly TowerBlockFactory _blockFactory;
         private readonly List<IBuildCondition> _conditions;
         private readonly ITower _tower;
+        private readonly IDestructionAnimator _destructionAnimator;
         private IDisposable _eventSubscription;
 
         public TowerBuilder(ScrollBase scroll, IProjectLogger logger, DropZone towerDropZone,
-                            TowerBlockFactory blockFactory, List<IBuildCondition> conditions, ITower tower)
+                            TowerBlockFactory blockFactory, List<IBuildCondition> conditions, ITower tower,
+                            IDestructionAnimator destructionAnimator)
         {
             _scroll = scroll;
             _logger = logger;
@@ -26,6 +29,7 @@ namespace BlockTower
             _blockFactory = blockFactory;
             _conditions = conditions;
             _tower = tower;
+            _destructionAnimator = destructionAnimator;
         }
 
         public void Start()
@@ -66,15 +70,24 @@ namespace BlockTower
         private void PlaceBlock(DropData data)
         {
             LogInfo(nameof(PlaceBlock));
-            var block = _blockFactory.Create();
-            block.transform.position = data.ScreenPoint;
-            block.Color = data.Color;
+            var block = CreateTowerBlock(data);
             _tower.Add(block);
         }
 
         private void DestroyBlock(DropData data)
         {
             LogInfo(nameof(DestroyBlock));
+            var block = CreateTowerBlock(data);
+            _destructionAnimator.StartAnimation(block.Transform, block.Image)
+                                .OnComplete(() => block.DestroySelf());
+        }
+
+        private TowerBlockBase CreateTowerBlock(DropData data)
+        {
+            var block = _blockFactory.Create();
+            block.transform.position = data.ScreenPoint;
+            block.Color = data.Color;
+            return block;
         }
 
         private void LogInfo(string message)

@@ -19,5 +19,10 @@ namespace BlockTower
                     ? default
                     : list[Random.Range(minInclusive: 0, list.Count)];
         }
+
+        public static void DestroySelf(this Component component)
+        {
+            Object.Destroy(component.gameObject);
+        }
     }
 }

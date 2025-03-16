@@ -50,7 +50,8 @@ namespace BlockTower
 
         private void RunContext(IGameConfig config)
         {
-            var gameInstaller = new GameInstaller(config, _scrollBlockTemplate, _scrollContent, _canvas, _scroll);
+            var gameInstaller = new GameInstaller(config, _scrollBlockTemplate, _scrollContent, _canvas, _scroll,
+                                                  _towerDropZone);
             _context.AddNormalInstaller(gameInstaller);
             _context.Run();
         }

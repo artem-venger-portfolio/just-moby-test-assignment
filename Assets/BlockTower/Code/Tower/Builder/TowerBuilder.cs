@@ -7,12 +7,14 @@ namespace BlockTower.Tower.Builder
     {
         private readonly ScrollBase _scroll;
         private readonly IProjectLogger _logger;
+        private readonly DropZone _towerDropZone;
         private IDisposable _scrollSubscription;
 
-        public TowerBuilder(ScrollBase scroll, IProjectLogger logger)
+        public TowerBuilder(ScrollBase scroll, IProjectLogger logger, DropZone towerDropZone)
         {
             _scroll = scroll;
             _logger = logger;
+            _towerDropZone = towerDropZone;
         }
 
         public void Start()

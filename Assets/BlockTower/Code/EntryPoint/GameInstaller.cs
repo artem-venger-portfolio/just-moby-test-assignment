@@ -11,15 +11,17 @@ namespace BlockTower
         private readonly Transform _scrollContent;
         private readonly Canvas _canvas;
         private readonly ScrollBase _scroll;
+        private readonly DropZone _towerDropZone;
 
         public GameInstaller(IGameConfig config, ScrollBlock scrollBlockTemplate, Transform scrollContent,
-                             Canvas canvas, ScrollBase scroll)
+                             Canvas canvas, ScrollBase scroll, DropZone towerDropZone)
         {
             _config = config;
             _scrollBlockTemplate = scrollBlockTemplate;
             _scrollContent = scrollContent;
             _canvas = canvas;
             _scroll = scroll;
+            _towerDropZone = towerDropZone;
         }
 
         public override void InstallBindings()
@@ -57,6 +59,7 @@ namespace BlockTower
             Container.Bind<ITowerBuilder>()
                      .To<TowerBuilder>()
                      .AsSingle()
+                     .WithArguments(_towerDropZone)
                      .NonLazy();
         }
     }

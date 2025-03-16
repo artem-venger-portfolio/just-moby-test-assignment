@@ -73,6 +73,11 @@ namespace BlockTower
                      .UnderTransform(_towerDropZone.transform)
                      .AsSingle()
                      .NonLazy();
+
+            Container.Bind<IBuildCondition>()
+                     .To(typeof(WithinScreenCondition), typeof(AboveLastBlockCondition))
+                     .AsTransient()
+                     .NonLazy();
         }
     }
 }

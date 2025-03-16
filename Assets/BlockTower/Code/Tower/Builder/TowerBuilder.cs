@@ -4,6 +4,7 @@ using System.Linq;
 using DG.Tweening;
 using JetBrains.Annotations;
 using R3;
+using UnityEngine;
 
 namespace BlockTower
 {
@@ -71,7 +72,17 @@ namespace BlockTower
         {
             LogInfo(nameof(PlaceBlock));
             var block = CreateTowerBlock(data);
+            if (_tower.IsEmpty() == false)
+            {
+                PlaceBlockAboveLast(data, block);
+            }
+
             _tower.Add(block);
+        }
+
+        private void PlaceBlockAboveLast(DropData data, TowerBlockBase block)
+        {
+            block.Transform.position = GetPositionAboveLastBlock(block, data.ScreenPoint);
         }
 
         private void DestroyBlock(DropData data)
@@ -88,6 +99,24 @@ namespace BlockTower
             block.transform.position = data.ScreenPoint;
             block.Color = data.Color;
             return block;
+        }
+
+        private Vector3 GetPositionAboveLastBlock(TowerBlockBase placingBlock, Vector2 screenPoint)
+        {
+            var lastBlock = _tower.GetLastBlock();
+            var lastBlockTransform = lastBlock.Transform;
+            var lastBlockPosition = lastBlockTransform.position;
+            var lastBlockDistanceToTop = lastBlockTransform.rect.yMax;
+            var lastBlockTopY = lastBlockPosition.y + lastBlockDistanceToTop;
+
+            var placingBlockDistanceToBottom = placingBlock.Transform.rect.xMin;
+
+            var targetX = screenPoint.x;
+            var targetY = lastBlockTopY - placingBlockDistanceToBottom;
+            const int target_z = 0;
+            var targetPosition = new Vector3(targetX, targetY, target_z);
+
+            return targetPosition;
         }
 
         private void LogInfo(string message)

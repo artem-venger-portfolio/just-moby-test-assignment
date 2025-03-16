@@ -6,14 +6,17 @@ namespace BlockTower
     public class EntryPoint : MonoBehaviour
     {
         [SerializeField]
-        private SOGameConfig _config;
-
-        [SerializeField]
         private SceneContext _context;
 
         private void Awake()
         {
-            var gameInstaller = new GameInstaller(_config);
+            IConfigLoader configLoader = new TextConfigLoader();
+            configLoader.Load(ConfigLoadedEventHandler);
+        }
+
+        private void ConfigLoadedEventHandler(IGameConfig config)
+        {
+            var gameInstaller = new GameInstaller(config);
             _context.AddNormalInstaller(gameInstaller);
             _context.Run();
             Destroy(gameObject);

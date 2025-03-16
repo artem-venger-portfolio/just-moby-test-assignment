@@ -1,8 +1,10 @@
 ﻿using System;
+using JetBrains.Annotations;
 using R3;
 
 namespace BlockTower.Tower.Builder
 {
+    [UsedImplicitly]
     public class TowerBuilder : ITowerBuilder
     {
         private readonly ScrollBase _scroll;

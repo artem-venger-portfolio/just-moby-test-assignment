@@ -17,6 +17,11 @@ namespace BlockTower
                      .FromInstance(_config)
                      .AsSingle()
                      .NonLazy();
+
+            Container.Bind<IProjectLogger>()
+                     .To<UnityLogger>()
+                     .AsSingle()
+                     .NonLazy();
         }
     }
 }

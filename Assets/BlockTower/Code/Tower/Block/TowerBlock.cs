@@ -19,10 +19,7 @@ namespace BlockTower
 
         public override Vector3[] GetWorldCorners()
         {
-            var corners = new Vector3[4];
-            Transform.GetWorldCorners(corners);
-
-            return corners;
+            return Transform.GetWorldCorners();
         }
 
         private RectTransform Transform => (RectTransform)transform;

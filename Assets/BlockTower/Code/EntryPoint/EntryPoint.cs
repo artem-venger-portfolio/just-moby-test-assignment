@@ -10,7 +10,7 @@ namespace BlockTower
 
         private void Awake()
         {
-            IConfigLoader configLoader = new TextConfigLoader();
+            IConfigLoader configLoader = new SOConfigLoader();
             configLoader.Load(ConfigLoadedEventHandler);
         }
 

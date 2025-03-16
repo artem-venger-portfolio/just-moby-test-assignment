@@ -27,6 +27,9 @@ namespace BlockTower
         private DropZone _holeDropZone;
 
         [SerializeField]
+        private Transform _towerBlockContainer;
+
+        [SerializeField]
         private TowerBlockBase _towerBlock;
 
         private ITowerBuilder _towerBuilder;
@@ -53,7 +56,7 @@ namespace BlockTower
         private void RunContext(IGameConfig config)
         {
             var gameInstaller = new GameInstaller(config, _scrollBlockTemplate, _scrollContent, _canvas, _scroll,
-                                                  _towerDropZone, _towerBlock);
+                                                  _towerDropZone, _towerBlockContainer, _towerBlock);
             _context.AddNormalInstaller(gameInstaller);
             _context.Run();
         }

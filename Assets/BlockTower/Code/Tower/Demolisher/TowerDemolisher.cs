@@ -18,7 +18,7 @@ namespace BlockTower
         public void Start()
         {
             _tower.BlockAdded
-                  .Subscribe(BlockAddedEventHandler)
+                  .Subscribe(block => block.Dropped.Subscribe(BlockDroppedEventHandler))
                   .AddTo(_compositeDisposable);
         }
 
@@ -27,7 +27,7 @@ namespace BlockTower
             _compositeDisposable.Clear();
         }
 
-        private void BlockAddedEventHandler(TowerBlockBase block)
+        private void BlockDroppedEventHandler(TowerBlockBase blockBase)
         {
         }
     }

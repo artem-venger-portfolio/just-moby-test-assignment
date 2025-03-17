@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using R3;
+using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using Zenject;
@@ -10,6 +11,7 @@ namespace BlockTower
         [SerializeField]
         private Image _image;
 
+        private readonly Subject<TowerBlockBase> _dropped = new();
         private Transform _draggingObjectContainer;
         private Transform _beginDragParent;
         private Vector3 _beginDragPosition;
@@ -23,6 +25,8 @@ namespace BlockTower
         public override Image Image => _image;
 
         public override RectTransform Transform => (RectTransform)transform;
+
+        public override Observable<TowerBlockBase> Dropped => _dropped;
 
         public override Vector3[] GetWorldCorners()
         {
@@ -63,6 +67,7 @@ namespace BlockTower
         {
             Parent = _beginDragParent;
             Position = _beginDragPosition;
+            _dropped.OnNext(this);
         }
     }
 }

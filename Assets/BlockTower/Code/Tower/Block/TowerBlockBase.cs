@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using R3;
+using UnityEngine;
 using UnityEngine.UI;
 
 namespace BlockTower
@@ -8,6 +9,7 @@ namespace BlockTower
         public abstract Image Image { get; }
         public abstract RectTransform Transform { get; }
         public abstract Color Color { get; set; }
+        public abstract Observable<TowerBlockBase> Dropped { get; }
         public abstract Vector3[] GetWorldCorners();
     }
 }

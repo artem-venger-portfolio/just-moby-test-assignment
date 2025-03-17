@@ -16,7 +16,7 @@ namespace BlockTower
         private readonly Transform _draggingObjectContainer;
 
         public GameInstaller(IGameConfig config, ScrollBlock scrollBlockTemplate, Transform scrollContent,
-                             Canvas canvas, ScrollBase scroll, DropZone towerDropZone, Transform towerBlockContainer, 
+                             Canvas canvas, ScrollBase scroll, DropZone towerDropZone, Transform towerBlockContainer,
                              TowerBlockBase towerBlock, Transform draggingObjectContainer)
         {
             _config = config;
@@ -66,6 +66,11 @@ namespace BlockTower
             Container.Bind<ITowerBuilder>()
                      .FromSubContainerResolve()
                      .ByMethod(InstallTowerBuilder)
+                     .AsSingle()
+                     .NonLazy();
+
+            Container.Bind<ITowerDemolisher>()
+                     .To<TowerDemolisher>()
                      .AsSingle()
                      .NonLazy();
 

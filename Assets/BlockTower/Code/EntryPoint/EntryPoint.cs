@@ -36,6 +36,7 @@ namespace BlockTower
         private Transform _draggingObjectContainer;
 
         private ITowerBuilder _towerBuilder;
+        private ITowerDemolisher _towerDemolisher;
 
         private void Awake()
         {
@@ -44,9 +45,10 @@ namespace BlockTower
         }
 
         [Inject]
-        private void InjectDependencies(ITowerBuilder towerBuilder)
+        private void InjectDependencies(ITowerBuilder towerBuilder, ITowerDemolisher towerDemolisher)
         {
             _towerBuilder = towerBuilder;
+            _towerDemolisher = towerDemolisher;
         }
 
         private void ConfigLoadedEventHandler(IGameConfig config)
@@ -59,7 +61,7 @@ namespace BlockTower
         private void RunContext(IGameConfig config)
         {
             var gameInstaller = new GameInstaller(config, _scrollBlockTemplate, _scrollContent, _canvas, _scroll,
-                                                  _towerDropZone, _towerBlockContainer, _towerBlock, 
+                                                  _towerDropZone, _towerBlockContainer, _towerBlock,
                                                   _draggingObjectContainer);
             _context.AddNormalInstaller(gameInstaller);
             _context.Run();
@@ -69,6 +71,7 @@ namespace BlockTower
         {
             _scroll.CreateBlocks();
             _towerBuilder.Start();
+            _towerDemolisher.Start();
         }
     }
 }

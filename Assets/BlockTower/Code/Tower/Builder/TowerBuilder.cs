@@ -22,7 +22,7 @@ namespace BlockTower
         private readonly IActionEventBus _bus;
         private readonly IPlacementAnimator _placementAnimator;
         private IDisposable _eventSubscription;
-        private readonly List<Tween> _placementAnimations;
+        private Tween _placementAnimation;
 
         public TowerBuilder(ScrollBase scroll, IProjectLogger logger, DropZone towerDropZone,
                             TowerBlockFactory blockFactory, List<IBuildCondition> conditions, ITower tower,
@@ -39,22 +39,17 @@ namespace BlockTower
             _canvas = canvas;
             _bus = bus;
             _placementAnimator = placementAnimator;
-            _placementAnimations = new List<Tween>();
         }
 
         public bool IsPlacementAnimationActive()
         {
-            return _placementAnimations.Count > 0;
+            return _placementAnimation.IsActive();
         }
 
         public void CompletePlacementAnimation()
         {
-            for (var i = _placementAnimations.Count - 1; i >= 0; i--)
-            {
-                var currentAnimation = _placementAnimations[i];
-                _placementAnimations.RemoveAt(i);
-                currentAnimation.Complete();
-            }
+            _placementAnimation.Complete();
+            _placementAnimation = null;
         }
 
         public void Start()
@@ -120,10 +115,13 @@ namespace BlockTower
 
         private void StartPlacementAnimation(TowerBlockBase newBlock)
         {
+            if (IsPlacementAnimationActive())
+            {
+                CompletePlacementAnimation();
+            }
+
             var targetPosition = CalculateTargetPositionOfNewBlock(newBlock);
-            var animation = _placementAnimator.StartAnimation(newBlock.Transform, targetPosition);
-            _placementAnimations.Add(animation);
-            animation.OnComplete(() => _placementAnimations.Remove(animation));
+            _placementAnimation = _placementAnimator.StartAnimation(newBlock.Transform, targetPosition);
         }
 
         private Vector3 CalculateTargetPositionOfNewBlock(TowerBlockBase newBlock)

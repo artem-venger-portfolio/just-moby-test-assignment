@@ -16,6 +16,7 @@ namespace BlockTower
         private Transform _beginDragParent;
         private Vector3 _beginDragPosition;
         private DropZone _holeDropZone;
+        private Canvas _canvas;
 
         public override Color Color
         {
@@ -34,6 +35,11 @@ namespace BlockTower
             return Transform.GetWorldCorners();
         }
 
+        public override float GetHeight()
+        {
+            return Transform.rect.height * _canvas.scaleFactor;
+        }
+
         private Transform Parent
         {
             get => transform.parent;
@@ -47,10 +53,11 @@ namespace BlockTower
         }
 
         [Inject]
-        private void InjectDependencies(Transform draggingObjectContainer, DropZone holeDropZone)
+        private void InjectDependencies(Transform draggingObjectContainer, DropZone holeDropZone, Canvas canvas)
         {
             _draggingObjectContainer = draggingObjectContainer;
             _holeDropZone = holeDropZone;
+            _canvas = canvas;
         }
 
         private void OnDestroy()

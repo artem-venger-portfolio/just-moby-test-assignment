@@ -11,5 +11,6 @@ namespace BlockTower
         public abstract Color Color { get; set; }
         public abstract Observable<TowerBlockBase> DroppedInHole { get; }
         public abstract Vector3[] GetWorldCorners();
+        public abstract float GetHeight();
     }
 }

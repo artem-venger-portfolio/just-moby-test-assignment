@@ -80,6 +80,11 @@ namespace BlockTower
                      .To<Tower>()
                      .AsSingle()
                      .NonLazy();
+
+            Container.Bind<ILocalizer>()
+                     .To<Localizer>()
+                     .AsSingle()
+                     .NonLazy();
         }
 
         private void InstallTowerBuilder(DiContainer subContainer)

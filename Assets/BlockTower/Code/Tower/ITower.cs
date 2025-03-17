@@ -10,6 +10,7 @@ namespace BlockTower
         TowerBlockBase GetLastBlock();
         void Add(TowerBlockBase block);
         void Remove(TowerBlockBase block);
+        int IndexOf(TowerBlockBase block);
 
         TowerBlockBase this[int i] { get; }
     }

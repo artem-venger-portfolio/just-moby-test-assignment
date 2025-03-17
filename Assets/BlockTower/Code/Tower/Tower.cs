@@ -14,6 +14,11 @@ namespace BlockTower
 
         public int Count => _blocks.Count;
 
+        public int IndexOf(TowerBlockBase block)
+        {
+            return _blocks.IndexOf(block);
+        }
+
         public bool IsEmpty()
         {
             return _blocks.Count == 0;

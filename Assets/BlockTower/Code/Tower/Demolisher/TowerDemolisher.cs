@@ -1,5 +1,6 @@
 ﻿using JetBrains.Annotations;
 using R3;
+using UnityEngine;
 
 namespace BlockTower
 {
@@ -29,8 +30,13 @@ namespace BlockTower
 
         private void BlockDroppedInHoleEventHandler(TowerBlockBase blockBase)
         {
+            var blockIndex = _tower.IndexOf(blockBase);
+            var blockHeight = blockBase.GetHeight();
             RemoveBlock(blockBase);
-            RebuildTower();
+            if (_tower.IsEmpty() == false)
+            {
+                RebuildTower(blockIndex, blockHeight);
+            }
         }
 
         private void RemoveBlock(TowerBlockBase blockBase)
@@ -39,8 +45,14 @@ namespace BlockTower
             blockBase.DestroySelf();
         }
 
-        private void RebuildTower()
+        private void RebuildTower(int startIndex, float height)
         {
+            for (var i = startIndex; i < _tower.Count; i++)
+            {
+                var currentBlock = _tower[i];
+                var currentBlockTransform = currentBlock.Transform;
+                currentBlockTransform.position -= new Vector3(x: 0, height, z: 0);
+            }
         }
     }
 }

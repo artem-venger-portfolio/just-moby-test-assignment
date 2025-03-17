@@ -120,5 +120,18 @@
       "b": 0.33333349227905276,
       "a": 1.0
     }
-  ]
+  ],
+  "PlacementAnimationConfig": {
+    "_duration": 1.0,
+    "_spinRelativeDuration": 0.699999988079071,
+    "_startHeight": 30.0,
+    "_moveUpRelativeDuration": 0.5,
+    "_moveUpDistance": 30.0
+  },
+  "RebuildAnimationConfig": {
+    "_duration": 0.20000000298023225,
+    "_interval": 0.10000000149011612
+  },
+  "RemoveAnimationDuration": 1.0,
+  "DestructionAnimationDuration": 1.0
 }

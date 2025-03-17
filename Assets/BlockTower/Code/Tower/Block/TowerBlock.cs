@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using Zenject;
 
 namespace BlockTower
 {
@@ -23,11 +24,6 @@ namespace BlockTower
 
         public override RectTransform Transform => (RectTransform)transform;
 
-        public void SetDraggingObjectContainer(Transform container)
-        {
-            _draggingObjectContainer = container;
-        }
-
         public override Vector3[] GetWorldCorners()
         {
             return Transform.GetWorldCorners();
@@ -43,6 +39,12 @@ namespace BlockTower
         {
             get => transform.position;
             set => transform.position = value;
+        }
+
+        [Inject]
+        private void InjectDependencies(Transform draggingObjectContainer)
+        {
+            _draggingObjectContainer = draggingObjectContainer;
         }
 
         void IBeginDragHandler.OnBeginDrag(PointerEventData eventData)

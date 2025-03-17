@@ -10,12 +10,10 @@ namespace BlockTower
     public class Scroll : ScrollBase, IBeginDragHandler, IEndDragHandler, IDragHandler
     {
         [SerializeField]
-        private Transform _draggingObjectContainer;
-
-        [SerializeField]
         private ScrollRect _scrollRect;
 
         private readonly Subject<DropData> _blockDroppedSubject = new();
+        private Transform _draggingObjectContainer;
         private IGameConfig _config;
         private IProjectLogger _logger;
         private ScrollBlock.Factory _blockFactory;
@@ -35,7 +33,6 @@ namespace BlockTower
                 var currentColor = colors[i];
                 var currentBlock = _blockFactory.Create();
                 currentBlock.Color = currentColor;
-                currentBlock.SetDraggingObjectContainer(_draggingObjectContainer);
                 _blocks[i] = currentBlock;
             }
         }

@@ -175,6 +175,7 @@ MonoBehaviour:
   _holeDropZone: {fileID: 1831530860}
   _towerBlockContainer: {fileID: 752875285}
   _towerBlock: {fileID: 8932849907055226627, guid: c0987fd91419d664d85a22dcbd458877, type: 3}
+  _draggingObjectContainer: {fileID: 730605269}
 --- !u!1 &730605268
 GameObject:
   m_ObjectHideFlags: 0
@@ -931,7 +932,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c66b5676d08741f4b2bb3e588a0600fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _draggingObjectContainer: {fileID: 730605269}
   _scrollRect: {fileID: 44454601623311055}
 --- !u!1 &6041508141818617492
 GameObject:

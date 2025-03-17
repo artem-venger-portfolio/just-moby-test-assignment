@@ -21,11 +21,6 @@ namespace BlockTower
             set => _image.color = value;
         }
 
-        public void SetDraggingObjectContainer(Transform container)
-        {
-            _draggableObject.SetDraggingObjectContainer(container);
-        }
-
         public bool IsAtScreenPoint(Vector2 screenPoint)
         {
             return _uiUtility.RectangleContainsScreenPoint(Transform, screenPoint);
@@ -54,9 +49,10 @@ namespace BlockTower
         private RectTransform Transform => (RectTransform)transform;
 
         [Inject]
-        private void InjectDependencies(UIUtility uiUtility)
+        private void InjectDependencies(UIUtility uiUtility, Transform draggingObjectContainer)
         {
             _uiUtility = uiUtility;
+            _draggableObject.SetDraggingObjectContainer(draggingObjectContainer);
         }
 
         [UsedImplicitly]

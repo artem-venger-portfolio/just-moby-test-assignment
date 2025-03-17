@@ -20,11 +20,13 @@ namespace BlockTower
         private readonly IDestructionAnimator _destructionAnimator;
         private readonly Canvas _canvas;
         private readonly IActionEventBus _bus;
+        private readonly IPlacementAnimator _placementAnimator;
         private IDisposable _eventSubscription;
 
         public TowerBuilder(ScrollBase scroll, IProjectLogger logger, DropZone towerDropZone,
                             TowerBlockFactory blockFactory, List<IBuildCondition> conditions, ITower tower,
-                            IDestructionAnimator destructionAnimator, Canvas canvas, IActionEventBus bus)
+                            IDestructionAnimator destructionAnimator, Canvas canvas, IActionEventBus bus,
+                            IPlacementAnimator placementAnimator)
         {
             _scroll = scroll;
             _logger = logger;
@@ -35,6 +37,7 @@ namespace BlockTower
             _destructionAnimator = destructionAnimator;
             _canvas = canvas;
             _bus = bus;
+            _placementAnimator = placementAnimator;
         }
 
         public void Start()
@@ -88,7 +91,8 @@ namespace BlockTower
 
         private void PlaceBlockAboveLast(DropData data, TowerBlockBase block)
         {
-            block.Transform.position = GetPositionAboveLastBlock(block, data.ScreenPoint);
+            var targetPosition = GetPositionAboveLastBlock(block, data.ScreenPoint);
+            _placementAnimator.StartAnimation(block.Transform, targetPosition);
         }
 
         private void DestroyBlock(DropData data)

@@ -81,24 +81,15 @@ namespace BlockTower
         {
             LogInfo(nameof(PlaceBlock));
             var block = CreateTowerBlock(data);
-            if (_tower.IsEmpty() == false)
-            {
-                PlaceBlockAboveLast(data, block);
-            }
-
+            StartPlacementAnimation(data, block);
             _tower.Add(block);
-        }
-
-        private void PlaceBlockAboveLast(DropData data, TowerBlockBase block)
-        {
-            var targetPosition = GetPositionAboveLastBlock(block, data.ScreenPoint);
-            _placementAnimator.StartAnimation(block.Transform, targetPosition);
         }
 
         private void DestroyBlock(DropData data)
         {
             LogInfo(nameof(DestroyBlock));
             var block = CreateTowerBlock(data);
+            block.Transform.position = data.ScreenPoint;
             _destructionAnimator.StartAnimation(block.Transform, block.Image)
                                 .OnComplete(() => block.DestroySelf());
         }
@@ -106,9 +97,17 @@ namespace BlockTower
         private TowerBlockBase CreateTowerBlock(DropData data)
         {
             var block = _blockFactory.Create();
-            block.transform.position = data.ScreenPoint;
             block.Color = data.Color;
             return block;
+        }
+
+        private void StartPlacementAnimation(DropData data, TowerBlockBase block)
+        {
+            var screenPoint = data.ScreenPoint;
+            var targetPosition = _tower.IsEmpty()
+                    ? (Vector3)screenPoint
+                    : GetPositionAboveLastBlock(block, screenPoint);
+            _placementAnimator.StartAnimation(block.Transform, targetPosition);
         }
 
         private Vector3 GetPositionAboveLastBlock(TowerBlockBase placingBlock, Vector2 screenPoint)

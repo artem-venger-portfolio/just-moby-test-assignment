@@ -1,53 +1,39 @@
-﻿using System;
-using DG.Tweening;
+﻿using DG.Tweening;
+using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.UI;
-using Random = UnityEngine.Random;
 
 namespace BlockTower
 {
+    [UsedImplicitly]
     public class DestructionAnimator : IDestructionAnimator
     {
-        private readonly Func<RectTransform, Image, Tween>[] _animations;
+        private readonly IGameConfig _config;
 
-        public DestructionAnimator()
+        public DestructionAnimator(IGameConfig config)
         {
-            _animations = new Func<RectTransform, Image, Tween>[]
-            {
-                ScaleAndFadeDestruction,
-                MoveToNewPosition,
-                SubtleDestruction,
-            };
+            _config = config;
         }
 
         public Tween StartAnimation(RectTransform transform, Image image)
         {
-            var randomAnimation = _animations.GetRandom();
-            return randomAnimation(transform, image);
-        }
-
-        private Tween ScaleAndFadeDestruction(RectTransform transform, Image image)
-        {
             var sequence = DOTween.Sequence();
-            sequence.Append(transform.DOScale(Vector3.zero, duration: 1f).SetEase(Ease.InQuad));
-            sequence.Join(image.DOFade(endValue: 0f, duration: 1f).SetEase(Ease.InQuad));
-            return sequence;
-        }
 
-        private Tween MoveToNewPosition(RectTransform transform, Image image)
-        {
-            var randomX = Random.Range(-Screen.width / 2f, Screen.width / 2f);
-            var randomY = Random.Range(-Screen.height / 2f, Screen.height / 2f);
-            return transform.DOMove(new Vector3(randomX, randomY, z: 0), duration: 1f).SetEase(Ease.InOutSine);
-        }
+            var duration = _config.DestructionAnimationDuration;
 
-        private Tween SubtleDestruction(RectTransform transform, Image image)
-        {
-            var sequence = DOTween.Sequence();
-            sequence.Append(transform.DOScale(Vector3.zero, duration: 0.8f).SetEase(Ease.InQuad));
-            sequence.Join(image.DOFade(endValue: 0f, duration: 0.8f).SetEase(Ease.InQuad));
-            sequence.Join(transform.DORotate(new Vector3(x: 0, y: 0, Random.Range(minInclusive: -45f, maxInclusive: 45f)),
-                                             duration: 0.8f, RotateMode.FastBeyond360));
+            var scaleAnimation = transform.DOScale(Vector3.zero, duration)
+                                          .SetEase(Ease.OutQuart);
+            sequence.Append(scaleAnimation);
+
+            var spinAngle = new Vector3(x: 0, y: 0, z: 360);
+            var spinAnimation = transform.DORotate(spinAngle, duration, RotateMode.FastBeyond360)
+                                         .SetEase(Ease.OutCubic);
+            sequence.Join(spinAnimation);
+
+            var fadeAnimation = image.DOFade(endValue: 0f, duration)
+                                     .SetEase(Ease.OutQuart);
+            sequence.Join(fadeAnimation);
+
             return sequence;
         }
     }

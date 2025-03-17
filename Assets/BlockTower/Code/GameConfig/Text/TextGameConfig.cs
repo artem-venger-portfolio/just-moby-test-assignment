@@ -16,5 +16,6 @@ namespace BlockTower
         public PlacementAnimationConfig PlacementAnimationConfig => _data.PlacementAnimationConfig;
         public RebuildAnimationConfig RebuildAnimationConfig => _data.RebuildAnimationConfig;
         public float RemoveAnimationDuration => _data.RemoveAnimationDuration;
+        public float DestructionAnimationDuration => _data.DestructionAnimationDuration;
     }
 }

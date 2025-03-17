@@ -9,5 +9,6 @@ namespace BlockTower
         PlacementAnimationConfig PlacementAnimationConfig { get; }
         RebuildAnimationConfig RebuildAnimationConfig { get; }
         float RemoveAnimationDuration { get; }
+        float DestructionAnimationDuration { get; }
     }
 }

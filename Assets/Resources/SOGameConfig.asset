@@ -44,3 +44,4 @@ MonoBehaviour:
       _duration: 0.2
       _interval: 0.1
     RemoveAnimationDuration: 1
+    DestructionAnimationDuration: 1

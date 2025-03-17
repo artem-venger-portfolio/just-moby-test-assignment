@@ -10,5 +10,6 @@ namespace BlockTower
         public PlacementAnimationConfig PlacementAnimationConfig;
         public RebuildAnimationConfig RebuildAnimationConfig;
         public float RemoveAnimationDuration;
+        public float DestructionAnimationDuration;
     }
 }

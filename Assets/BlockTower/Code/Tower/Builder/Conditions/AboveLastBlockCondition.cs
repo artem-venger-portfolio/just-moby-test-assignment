@@ -33,7 +33,7 @@ namespace BlockTower
             var lastBlockTopRight = lastBlockCorners[2];
 
             var checkingBlockBottomY = checkingBlockBottomLeft.y;
-            var lastBlockTopY = lastBlockTopLeft.y;
+            var lastBlockTopY = _tower.TopY;
             var isCheckingBlockBottomHigherThanLastBlockTop = checkingBlockBottomY >= lastBlockTopY;
 
             var isCheckingBlockWidthAndLastBlockWidthIntersects = RangesIntersect(checkingBlockBottomLeft.x,

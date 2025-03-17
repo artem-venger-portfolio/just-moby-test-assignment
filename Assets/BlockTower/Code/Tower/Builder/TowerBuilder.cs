@@ -89,7 +89,6 @@ namespace BlockTower
         {
             LogInfo(nameof(DestroyBlock));
             var block = CreateTowerBlock(data);
-            block.Transform.position = data.ScreenPoint;
             _destructionAnimator.StartAnimation(block.Transform, block.Image)
                                 .OnComplete(() => block.DestroySelf());
         }
@@ -98,6 +97,7 @@ namespace BlockTower
         {
             var block = _blockFactory.Create();
             block.Color = data.Color;
+            block.Transform.position = data.ScreenPoint;
             return block;
         }
 

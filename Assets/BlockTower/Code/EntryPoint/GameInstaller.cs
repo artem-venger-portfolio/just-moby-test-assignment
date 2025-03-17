@@ -15,10 +15,12 @@ namespace BlockTower
         private readonly TowerBlockBase _towerBlock;
         private readonly Transform _draggingObjectContainer;
         private readonly DropZone _holeDropZone;
+        private readonly IActionDisplay _actionDisplay;
 
         public GameInstaller(IGameConfig config, ScrollBlock scrollBlockTemplate, Transform scrollContent,
                              Canvas canvas, ScrollBase scroll, DropZone towerDropZone, Transform towerBlockContainer,
-                             TowerBlockBase towerBlock, Transform draggingObjectContainer, DropZone holeDropZone)
+                             TowerBlockBase towerBlock, Transform draggingObjectContainer, DropZone holeDropZone,
+                             IActionDisplay actionDisplay)
         {
             _config = config;
             _scrollBlockTemplate = scrollBlockTemplate;
@@ -30,6 +32,7 @@ namespace BlockTower
             _towerBlock = towerBlock;
             _draggingObjectContainer = draggingObjectContainer;
             _holeDropZone = holeDropZone;
+            _actionDisplay = actionDisplay;
         }
 
         public override void InstallBindings()
@@ -83,6 +86,11 @@ namespace BlockTower
 
             Container.Bind<ILocalizer>()
                      .To<Localizer>()
+                     .AsSingle()
+                     .NonLazy();
+
+            Container.Bind<IActionDisplay>()
+                     .FromInstance(_actionDisplay)
                      .AsSingle()
                      .NonLazy();
         }

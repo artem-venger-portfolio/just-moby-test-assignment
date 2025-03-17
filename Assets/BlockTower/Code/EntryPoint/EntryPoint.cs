@@ -35,6 +35,9 @@ namespace BlockTower
         [SerializeField]
         private Transform _draggingObjectContainer;
 
+        [SerializeField]
+        private ActionDisplay _actionDisplay;
+
         private ITowerBuilder _towerBuilder;
         private ITowerDemolisher _towerDemolisher;
 
@@ -62,7 +65,7 @@ namespace BlockTower
         {
             var gameInstaller = new GameInstaller(config, _scrollBlockTemplate, _scrollContent, _canvas, _scroll,
                                                   _towerDropZone, _towerBlockContainer, _towerBlock,
-                                                  _draggingObjectContainer, _holeDropZone);
+                                                  _draggingObjectContainer, _holeDropZone, _actionDisplay);
             _context.AddNormalInstaller(gameInstaller);
             _context.Run();
         }

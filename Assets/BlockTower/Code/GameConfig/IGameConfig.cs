@@ -7,5 +7,6 @@ namespace BlockTower
     {
         IList<Color> Colors { get; }
         PlacementAnimationConfig PlacementAnimationConfig { get; }
+        public RebuildAnimationConfig RebuildAnimationConfig { get; }
     }
 }

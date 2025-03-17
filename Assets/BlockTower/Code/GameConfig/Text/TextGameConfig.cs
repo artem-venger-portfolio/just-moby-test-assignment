@@ -14,5 +14,6 @@ namespace BlockTower
 
         public IList<Color> Colors => _data.Colors;
         public PlacementAnimationConfig PlacementAnimationConfig => _data.PlacementAnimationConfig;
+        public RebuildAnimationConfig RebuildAnimationConfig => _data.RebuildAnimationConfig;
     }
 }

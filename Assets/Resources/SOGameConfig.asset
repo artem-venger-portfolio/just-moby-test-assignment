@@ -40,3 +40,6 @@ MonoBehaviour:
       _startHeight: 30
       _moveUpRelativeDuration: 0.5
       _moveUpDistance: 30
+    RebuildAnimationConfig:
+      _duration: 0.2
+      _interval: 0.1

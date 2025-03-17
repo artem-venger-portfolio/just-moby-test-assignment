@@ -1,6 +1,6 @@
-﻿using JetBrains.Annotations;
+﻿using DG.Tweening;
+using JetBrains.Annotations;
 using R3;
-using UnityEngine;
 
 namespace BlockTower
 {
@@ -8,12 +8,14 @@ namespace BlockTower
     public class TowerDemolisher : ITowerDemolisher
     {
         private readonly CompositeDisposable _compositeDisposable;
+        private readonly RebuildAnimationConfig _animationConfig;
         private readonly ITower _tower;
 
-        public TowerDemolisher(ITower tower)
+        public TowerDemolisher(ITower tower, IGameConfig gameConfig)
         {
-            _tower = tower;
             _compositeDisposable = new CompositeDisposable();
+            _tower = tower;
+            _animationConfig = gameConfig.RebuildAnimationConfig;
         }
 
         public void Start()
@@ -47,11 +49,17 @@ namespace BlockTower
 
         private void RebuildTower(int startIndex, float height)
         {
+            var sequence = DOTween.Sequence();
             for (var i = startIndex; i < _tower.Count; i++)
             {
                 var currentBlock = _tower[i];
                 var currentBlockTransform = currentBlock.Transform;
-                currentBlockTransform.position -= new Vector3(x: 0, height, z: 0);
+
+                var moveAnimation = currentBlockTransform.DOMoveY(-height, _animationConfig.Duration)
+                                                         .SetRelative()
+                                                         .SetEase(Ease.OutQuart);
+                var startTime = i * _animationConfig.Interval;
+                sequence.Insert(startTime, moveAnimation);
             }
         }
     }

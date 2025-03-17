@@ -8,5 +8,6 @@ namespace BlockTower
     {
         public Color[] Colors;
         public PlacementAnimationConfig PlacementAnimationConfig;
+        public RebuildAnimationConfig RebuildAnimationConfig;
     }
 }

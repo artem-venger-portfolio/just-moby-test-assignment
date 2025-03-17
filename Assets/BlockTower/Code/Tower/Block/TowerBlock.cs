@@ -16,6 +16,7 @@ namespace BlockTower
         private Transform _beginDragParent;
         private Vector3 _beginDragPosition;
         private DropZone _holeDropZone;
+        private IActionEventBus _bus;
         private Canvas _canvas;
 
         public override Color Color
@@ -53,15 +54,18 @@ namespace BlockTower
         }
 
         [Inject]
-        private void InjectDependencies(Transform draggingObjectContainer, DropZone holeDropZone, Canvas canvas)
+        private void InjectDependencies(Transform draggingObjectContainer, DropZone holeDropZone, Canvas canvas,
+                                        IActionEventBus bus)
         {
             _draggingObjectContainer = draggingObjectContainer;
             _holeDropZone = holeDropZone;
             _canvas = canvas;
+            _bus = bus;
         }
 
         private void OnDestroy()
         {
+            FireAction(ActionEvent.TowerBlockDestroyed);
             _droppedInHole.Dispose();
         }
 
@@ -70,6 +74,7 @@ namespace BlockTower
             _beginDragParent = Parent;
             Parent = _draggingObjectContainer;
             _beginDragPosition = Position;
+            FireAction(ActionEvent.TowerBlockDragged);
         }
 
         void IDragHandler.OnDrag(PointerEventData eventData)
@@ -83,12 +88,19 @@ namespace BlockTower
             {
                 _droppedInHole.OnNext(this);
                 _droppedInHole.OnCompleted();
+                FireAction(ActionEvent.TowerBlockDroppedInHole);
             }
             else
             {
                 Parent = _beginDragParent;
                 Position = _beginDragPosition;
+                FireAction(ActionEvent.TowerBlockDropped);
             }
+        }
+
+        private void FireAction(ActionEvent actionEvent)
+        {
+            _bus.Fire(actionEvent);
         }
     }
 }

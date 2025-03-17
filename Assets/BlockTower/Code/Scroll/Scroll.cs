@@ -20,6 +20,7 @@ namespace BlockTower
         private ScrollBlock _draggingBlock;
         private bool _isDragging;
         private ScrollBlock[] _blocks;
+        private IActionEventBus _bus;
 
         public override Observable<DropData> BlockDropped => _blockDroppedSubject;
 
@@ -38,11 +39,13 @@ namespace BlockTower
         }
 
         [Inject]
-        private void InjectDependencies(IGameConfig config, IProjectLogger logger, ScrollBlock.Factory blockFactory)
+        private void InjectDependencies(IGameConfig config, IProjectLogger logger, ScrollBlock.Factory blockFactory,
+                                        IActionEventBus bus)
         {
             _config = config;
             _logger = logger;
             _blockFactory = blockFactory;
+            _bus = bus;
         }
 
         void IBeginDragHandler.OnBeginDrag(PointerEventData eventData)
@@ -62,6 +65,7 @@ namespace BlockTower
             _draggingBlock = GetBlockAtScreenPoint(screenPoint);
             _draggingBlock.OnBeginDrag();
             SetIsDraggingAndChangeScrollActivity(isDragging: true);
+            FireAction(ActionEvent.BlockDraggedFromScrollBar);
         }
 
         void IDragHandler.OnDrag(PointerEventData eventData)
@@ -88,6 +92,7 @@ namespace BlockTower
 
             SetIsDraggingAndChangeScrollActivity(isDragging: false);
 
+            FireAction(ActionEvent.BlockFromScrollBarDropped);
             _blockDroppedSubject.OnNext(dropData);
         }
 
@@ -121,6 +126,11 @@ namespace BlockTower
         {
             _isDragging = isDragging;
             _scrollRect.horizontal = !_isDragging;
+        }
+
+        private void FireAction(ActionEvent actionEvent)
+        {
+            _bus.Fire(actionEvent);
         }
 
         private void LogInfo(string message)

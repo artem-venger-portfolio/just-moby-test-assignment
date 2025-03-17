@@ -19,11 +19,12 @@ namespace BlockTower
         private readonly ITower _tower;
         private readonly IDestructionAnimator _destructionAnimator;
         private readonly Canvas _canvas;
+        private readonly IActionEventBus _bus;
         private IDisposable _eventSubscription;
 
         public TowerBuilder(ScrollBase scroll, IProjectLogger logger, DropZone towerDropZone,
                             TowerBlockFactory blockFactory, List<IBuildCondition> conditions, ITower tower,
-                            IDestructionAnimator destructionAnimator, Canvas canvas)
+                            IDestructionAnimator destructionAnimator, Canvas canvas, IActionEventBus bus)
         {
             _scroll = scroll;
             _logger = logger;
@@ -33,6 +34,7 @@ namespace BlockTower
             _tower = tower;
             _destructionAnimator = destructionAnimator;
             _canvas = canvas;
+            _bus = bus;
         }
 
         public void Start()
@@ -41,10 +43,12 @@ namespace BlockTower
             {
                 if (CanPlaceBlock(data))
                 {
+                    FireAction(ActionEvent.BlockDroppedInAppropriatePlace);
                     PlaceBlock(data);
                 }
                 else
                 {
+                    FireAction(ActionEvent.BlockDroppedInInappropriatePlace);
                     DestroyBlock(data);
                 }
             });
@@ -124,6 +128,11 @@ namespace BlockTower
         private void LogInfo(string message)
         {
             _logger.LogInfo(message, nameof(TowerBuilder));
+        }
+
+        private void FireAction(ActionEvent actionEvent)
+        {
+            _bus.Fire(actionEvent);
         }
     }
 }

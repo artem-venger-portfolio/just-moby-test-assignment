@@ -82,7 +82,7 @@ namespace BlockTower
             LogInfo(nameof(PlaceBlock));
             var block = CreateTowerBlock(data);
             _tower.Add(block);
-            StartPlacementAnimation(data, block);
+            StartPlacementAnimation(block);
         }
 
         private void DestroyBlock(DropData data)
@@ -101,21 +101,30 @@ namespace BlockTower
             return block;
         }
 
-        private void StartPlacementAnimation(DropData data, TowerBlockBase block)
+        private void StartPlacementAnimation(TowerBlockBase newBlock)
         {
-            var targetPosition = _tower.IsEmpty()
-                    ? block.Transform.position
-                    : GetPositionAboveLastBlock(block, data.ScreenPoint);
-            _placementAnimator.StartAnimation(block.Transform, targetPosition);
+            var targetPosition = CalculateTargetPositionOfNewBlock(newBlock);
+            _placementAnimator.StartAnimation(newBlock.Transform, targetPosition);
         }
 
-        private Vector3 GetPositionAboveLastBlock(TowerBlockBase placingBlock, Vector2 screenPoint)
+        private Vector3 CalculateTargetPositionOfNewBlock(TowerBlockBase newBlock)
         {
-            var targetX = screenPoint.x;
-            var placingBlockHeight = placingBlock.Transform.rect.height * _canvas.scaleFactor;
-            var targetY = _tower.TopY - placingBlockHeight;
-            const int target_z = 0;
-            var targetPosition = new Vector3(targetX, targetY, target_z);
+            var blockTransform = newBlock.Transform;
+            var blockPosition = blockTransform.position;
+
+            Vector3 targetPosition;
+            var isTowerContainsOnlyNewBlock = _tower.Count == 1;
+            if (isTowerContainsOnlyNewBlock)
+            {
+                targetPosition = blockPosition;
+            }
+            else
+            {
+                var blockDistanceToTop = blockTransform.rect.yMax * _canvas.scaleFactor;
+                var blockTop = _tower.TopY;
+                var targetY = blockTop - blockDistanceToTop;
+                targetPosition = new Vector3(blockPosition.x, targetY, blockPosition.z);
+            }
 
             return targetPosition;
         }

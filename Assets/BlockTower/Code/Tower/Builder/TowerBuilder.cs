@@ -92,9 +92,15 @@ namespace BlockTower
         private void PlaceBlock(DropData data)
         {
             LogInfo(nameof(PlaceBlock));
+
+            if (IsPlacementAnimationActive())
+            {
+                CompletePlacementAnimation();
+            }
+
             var block = CreateTowerBlock(data);
-            _tower.Add(block);
             StartPlacementAnimation(block);
+            _tower.Add(block);
         }
 
         private void DestroyBlock(DropData data)
@@ -115,32 +121,29 @@ namespace BlockTower
 
         private void StartPlacementAnimation(TowerBlockBase newBlock)
         {
-            if (IsPlacementAnimationActive())
-            {
-                CompletePlacementAnimation();
-            }
-
             var targetPosition = CalculateTargetPositionOfNewBlock(newBlock);
             _placementAnimation = _placementAnimator.StartAnimation(newBlock.Transform, targetPosition);
         }
 
         private Vector3 CalculateTargetPositionOfNewBlock(TowerBlockBase newBlock)
         {
-            var blockTransform = newBlock.Transform;
-            var blockPosition = blockTransform.position;
+            var newBlockPosition = newBlock.Transform.position;
 
             Vector3 targetPosition;
-            var isTowerContainsOnlyNewBlock = _tower.Count == 1;
-            if (isTowerContainsOnlyNewBlock)
+            if (_tower.IsEmpty())
             {
-                targetPosition = blockPosition;
+                targetPosition = newBlockPosition;
             }
             else
             {
-                var blockDistanceToTop = blockTransform.rect.yMax * _canvas.scaleFactor;
-                var blockTop = _tower.TopY;
-                var targetY = blockTop - blockDistanceToTop;
-                targetPosition = new Vector3(blockPosition.x, targetY, blockPosition.z);
+                var lastBlock = _tower.GetLastBlock();
+                var lastBlockTransform = lastBlock.Transform;
+                var lastBlockDistanceToTop = lastBlockTransform.rect.yMax * _canvas.scaleFactor;
+                var lastBlockTopY = lastBlockTransform.position.y + lastBlockDistanceToTop;
+
+                var placingBlockDistanceToBottom = newBlock.Transform.rect.xMin * _canvas.scaleFactor;
+                var targetY = lastBlockTopY - placingBlockDistanceToBottom;
+                targetPosition = new Vector3(newBlockPosition.x, targetY, newBlockPosition.z);
             }
 
             return targetPosition;

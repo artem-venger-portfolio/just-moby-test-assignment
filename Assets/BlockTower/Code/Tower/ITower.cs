@@ -6,7 +6,6 @@ namespace BlockTower
     {
         Observable<TowerBlockBase> BlockAdded { get; }
         int Count { get; }
-        float TopY { get; }
         bool IsEmpty();
         TowerBlockBase GetLastBlock();
         void Add(TowerBlockBase block);

@@ -58,26 +58,23 @@ namespace BlockTower
 
         public TowerBlockBase this[int i] => _blocks[i];
 
-        private bool IsTopYEmpty => _topY.Count == 0;
-
         private void AddTopY(TowerBlockBase block)
         {
-            float baseY;
-            if (IsTopYEmpty)
+            float topY;
+            var isTopYEmpty = _topY.Count == 0;
+            if (isTopYEmpty)
             {
                 var blockTransform = block.Transform;
-                var blockDistanceToBottom = blockTransform.rect.yMin * _canvas.scaleFactor;
-                baseY = blockTransform.position.y + blockDistanceToBottom;
+                var blockDistanceToTop = blockTransform.rect.yMax * _canvas.scaleFactor;
+                topY = blockTransform.position.y + blockDistanceToTop;
             }
             else
             {
-                baseY = TopY;
+                var blockHeight = GetBlockHeight(block);
+                topY = TopY + blockHeight;
             }
 
-            var blockHeight = GetBlockHeight(block);
-            var blockTopY = baseY + blockHeight;
-
-            _topY.Add(blockTopY);
+            _topY.Add(topY);
         }
 
         private void RemoveTopYAt(int index)

@@ -12,6 +12,8 @@ namespace BlockTower
 
         public Observable<TowerBlockBase> BlockAdded => _blockAdded;
 
+        public int Count => _blocks.Count;
+
         public bool IsEmpty()
         {
             return _blocks.Count == 0;

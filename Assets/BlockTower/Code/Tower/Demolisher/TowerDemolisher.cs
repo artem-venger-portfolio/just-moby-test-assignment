@@ -9,6 +9,7 @@ namespace BlockTower
     {
         private readonly CompositeDisposable _compositeDisposable;
         private readonly RebuildAnimationConfig _animationConfig;
+        private readonly IGameConfig _gameConfig;
         private readonly ITowerBuilder _builder;
         private readonly DropZone _holeDropZone;
         private readonly IActionEventBus _bus;
@@ -20,6 +21,7 @@ namespace BlockTower
         {
             _compositeDisposable = new CompositeDisposable();
             _tower = tower;
+            _gameConfig = gameConfig;
             _builder = builder;
             _holeDropZone = holeDropZone;
             _bus = bus;
@@ -72,10 +74,10 @@ namespace BlockTower
             }
         }
 
-        private void RemoveBlock(TowerBlockBase blockBase)
+        private void RemoveBlock(TowerBlockBase block)
         {
-            _tower.Remove(blockBase);
-            blockBase.DestroySelf();
+            _tower.Remove(block);
+            StartRemoveAnimation(block);
         }
 
         private void RebuildTower(int startIndex, float height)
@@ -108,6 +110,17 @@ namespace BlockTower
             {
                 _builder.CompletePlacementAnimation();
             }
+        }
+
+        private void StartRemoveAnimation(TowerBlockBase block)
+        {
+            var blockTransform = block.Transform;
+            var holeTransform = _holeDropZone.transform;
+            blockTransform.SetParent(holeTransform, worldPositionStays: true);
+            blockTransform.position = holeTransform.position;
+            blockTransform.DOMoveY(endValue: 0, _gameConfig.RemoveAnimationDuration)
+                          .SetEase(Ease.OutQuart)
+                          .OnComplete(block.DestroySelf);
         }
 
         private void FireAction(ActionEvent actionEvent)

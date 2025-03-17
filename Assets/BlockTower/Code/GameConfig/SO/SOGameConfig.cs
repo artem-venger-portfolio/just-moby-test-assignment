@@ -14,5 +14,6 @@ namespace BlockTower
         public IList<Color> Colors => _config.Colors;
         public PlacementAnimationConfig PlacementAnimationConfig => _config.PlacementAnimationConfig;
         public RebuildAnimationConfig RebuildAnimationConfig => _config.RebuildAnimationConfig;
+        public float RemoveAnimationDuration => _config.RemoveAnimationDuration;
     }
 }

@@ -8,5 +8,6 @@ namespace BlockTower
         IList<Color> Colors { get; }
         PlacementAnimationConfig PlacementAnimationConfig { get; }
         RebuildAnimationConfig RebuildAnimationConfig { get; }
+        float RemoveAnimationDuration { get; }
     }
 }

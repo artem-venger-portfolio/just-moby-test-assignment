@@ -93,6 +93,11 @@ namespace BlockTower
                      .FromInstance(_actionDisplay)
                      .AsSingle()
                      .NonLazy();
+
+            Container.Bind<IActionEventBus>()
+                     .To<ActionEventBus>()
+                     .AsSingle()
+                     .NonLazy();
         }
 
         private void InstallTowerBuilder(DiContainer subContainer)

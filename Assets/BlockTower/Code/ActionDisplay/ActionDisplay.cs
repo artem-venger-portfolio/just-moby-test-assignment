@@ -31,7 +31,15 @@ namespace BlockTower
         {
             return actionEvent switch
             {
-                _ => actionEvent.ToString(),
+                ActionEvent.BlockDraggedFromScrollBar        => LocalizationKeys.BLOCK_DRAGGED_FROM_SCROLL_BAR,
+                ActionEvent.BlockFromScrollBarDropped        => LocalizationKeys.BLOCK_FROM_SCROLL_BAR_DROPPED,
+                ActionEvent.BlockDroppedInAppropriatePlace   => LocalizationKeys.BLOCK_DROPPED_IN_APPROPRIATE_PLACE,
+                ActionEvent.BlockDroppedInInappropriatePlace => LocalizationKeys.BLOCK_DROPPED_IN_INAPPROPRIATE_PLACE,
+                ActionEvent.TowerBlockDestroyed              => LocalizationKeys.TOWER_BLOCK_DESTROYED,
+                ActionEvent.TowerBlockDragged                => LocalizationKeys.TOWER_BLOCK_DRAGGED,
+                ActionEvent.TowerBlockDropped                => LocalizationKeys.TOWER_BLOCK_DROPPED,
+                ActionEvent.TowerBlockDroppedInHole          => LocalizationKeys.TOWER_BLOCK_DROPPED_IN_HOLE,
+                _                                            => actionEvent.ToString(),
             };
         }
 

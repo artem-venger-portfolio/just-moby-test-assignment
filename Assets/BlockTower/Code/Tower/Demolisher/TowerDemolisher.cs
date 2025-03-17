@@ -10,6 +10,7 @@ namespace BlockTower
         private readonly CompositeDisposable _compositeDisposable;
         private readonly RebuildAnimationConfig _animationConfig;
         private readonly ITower _tower;
+        private Tween _rebuildAnimation;
 
         public TowerDemolisher(ITower tower, IGameConfig gameConfig)
         {
@@ -32,12 +33,21 @@ namespace BlockTower
 
         private void BlockDroppedInHoleEventHandler(TowerBlockBase blockBase)
         {
+            CompletePreviousOperationIfNeeded();
             var blockIndex = _tower.IndexOf(blockBase);
             var blockHeight = blockBase.GetHeight();
             RemoveBlock(blockBase);
             if (_tower.IsEmpty() == false)
             {
                 RebuildTower(blockIndex, blockHeight);
+            }
+        }
+
+        private void CompletePreviousOperationIfNeeded()
+        {
+            if (_rebuildAnimation.IsActive())
+            {
+                _rebuildAnimation.Complete();
             }
         }
 
@@ -61,6 +71,8 @@ namespace BlockTower
                 var startTime = i * _animationConfig.Interval;
                 sequence.Insert(startTime, moveAnimation);
             }
+
+            _rebuildAnimation = sequence;
         }
     }
 }

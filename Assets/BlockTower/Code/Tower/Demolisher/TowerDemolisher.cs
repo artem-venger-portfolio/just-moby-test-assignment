@@ -9,13 +9,15 @@ namespace BlockTower
     {
         private readonly CompositeDisposable _compositeDisposable;
         private readonly RebuildAnimationConfig _animationConfig;
+        private readonly ITowerBuilder _builder;
         private readonly ITower _tower;
         private Tween _rebuildAnimation;
 
-        public TowerDemolisher(ITower tower, IGameConfig gameConfig)
+        public TowerDemolisher(ITower tower, IGameConfig gameConfig, ITowerBuilder builder)
         {
             _compositeDisposable = new CompositeDisposable();
             _tower = tower;
+            _builder = builder;
             _animationConfig = gameConfig.RebuildAnimationConfig;
         }
 
@@ -59,6 +61,12 @@ namespace BlockTower
 
         private void RebuildTower(int startIndex, float height)
         {
+            CompletePlacementAnimationIfNeeded();
+            _rebuildAnimation = GetRebuildAnimation(startIndex, height);
+        }
+
+        private Tween GetRebuildAnimation(int startIndex, float height)
+        {
             var sequence = DOTween.Sequence();
             for (var i = startIndex; i < _tower.Count; i++)
             {
@@ -72,7 +80,15 @@ namespace BlockTower
                 sequence.Insert(startTime, moveAnimation);
             }
 
-            _rebuildAnimation = sequence;
+            return sequence;
+        }
+
+        private void CompletePlacementAnimationIfNeeded()
+        {
+            if (_builder.IsPlacementAnimationActive())
+            {
+                _builder.CompletePlacementAnimation();
+            }
         }
     }
 }

@@ -40,6 +40,7 @@ namespace BlockTower
 
         private ITowerBuilder _towerBuilder;
         private ITowerDemolisher _towerDemolisher;
+        private ILocalizer _localizer;
 
         private void Awake()
         {
@@ -48,10 +49,12 @@ namespace BlockTower
         }
 
         [Inject]
-        private void InjectDependencies(ITowerBuilder towerBuilder, ITowerDemolisher towerDemolisher)
+        private void InjectDependencies(ITowerBuilder towerBuilder, ITowerDemolisher towerDemolisher,
+                                        ILocalizer localizer)
         {
             _towerBuilder = towerBuilder;
             _towerDemolisher = towerDemolisher;
+            _localizer = localizer;
         }
 
         private void ConfigLoadedEventHandler(IGameConfig config)
@@ -75,6 +78,8 @@ namespace BlockTower
             _scroll.CreateBlocks();
             _towerBuilder.Start();
             _towerDemolisher.Start();
+            _localizer.Language = Language.EN;
+            _actionDisplay.PrintLocalized(LocalizationKeys.HELLO_WORLD);
         }
     }
 }

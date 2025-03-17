@@ -77,6 +77,7 @@ namespace BlockTower
             Container.Bind<ITowerDemolisher>()
                      .To<TowerDemolisher>()
                      .AsSingle()
+                     .WithArguments(_holeDropZone)
                      .NonLazy();
 
             Container.Bind<ITower>()
@@ -112,7 +113,7 @@ namespace BlockTower
                         .FromComponentInNewPrefab(_towerBlock)
                         .UnderTransform(_towerBlockContainer)
                         .AsSingle()
-                        .WithArguments(_draggingObjectContainer, _holeDropZone)
+                        .WithArguments(_draggingObjectContainer)
                         .NonLazy();
 
             subContainer.Bind<IBuildCondition>()

@@ -10,27 +10,46 @@ namespace BlockTower
         private readonly CompositeDisposable _compositeDisposable;
         private readonly RebuildAnimationConfig _animationConfig;
         private readonly ITowerBuilder _builder;
+        private readonly DropZone _holeDropZone;
+        private readonly IActionEventBus _bus;
         private readonly ITower _tower;
         private Tween _rebuildAnimation;
 
-        public TowerDemolisher(ITower tower, IGameConfig gameConfig, ITowerBuilder builder)
+        public TowerDemolisher(ITower tower, IGameConfig gameConfig, ITowerBuilder builder, DropZone holeDropZone,
+                               IActionEventBus bus)
         {
             _compositeDisposable = new CompositeDisposable();
             _tower = tower;
             _builder = builder;
+            _holeDropZone = holeDropZone;
+            _bus = bus;
             _animationConfig = gameConfig.RebuildAnimationConfig;
         }
 
         public void Start()
         {
             _tower.BlockAdded
-                  .Subscribe(block => block.DroppedInHole.Subscribe(BlockDroppedInHoleEventHandler))
+                  .Subscribe(block => block.DroppedStream.Subscribe(BlockDroppedEventHandler))
                   .AddTo(_compositeDisposable);
         }
 
         public void Stop()
         {
             _compositeDisposable.Clear();
+        }
+
+        private void BlockDroppedEventHandler(TowerBlockBase blockBase)
+        {
+            if (_holeDropZone.IsInZone(blockBase.Transform.position))
+            {
+                FireAction(ActionEvent.TowerBlockDroppedInHole);
+                BlockDroppedInHoleEventHandler(blockBase);
+            }
+            else
+            {
+                blockBase.ReturnToBeginDragPosition();
+                FireAction(ActionEvent.TowerBlockDropped);
+            }
         }
 
         private void BlockDroppedInHoleEventHandler(TowerBlockBase blockBase)
@@ -89,6 +108,11 @@ namespace BlockTower
             {
                 _builder.CompletePlacementAnimation();
             }
+        }
+
+        private void FireAction(ActionEvent actionEvent)
+        {
+            _bus.Fire(actionEvent);
         }
     }
 }

@@ -11,11 +11,10 @@ namespace BlockTower
         [SerializeField]
         private Image _image;
 
-        private readonly Subject<TowerBlockBase> _droppedInHole = new();
+        private readonly Subject<TowerBlockBase> _droppedStream = new();
         private Transform _draggingObjectContainer;
         private Transform _beginDragParent;
         private Vector3 _beginDragPosition;
-        private DropZone _holeDropZone;
         private IActionEventBus _bus;
         private Canvas _canvas;
 
@@ -29,7 +28,7 @@ namespace BlockTower
 
         public override RectTransform Transform => (RectTransform)transform;
 
-        public override Observable<TowerBlockBase> DroppedInHole => _droppedInHole;
+        public override Observable<TowerBlockBase> DroppedStream => _droppedStream;
 
         public override Vector3[] GetWorldCorners()
         {
@@ -39,6 +38,12 @@ namespace BlockTower
         public override float GetHeight()
         {
             return Transform.rect.height * _canvas.scaleFactor;
+        }
+
+        public override void ReturnToBeginDragPosition()
+        {
+            Parent = _beginDragParent;
+            Position = _beginDragPosition;
         }
 
         private Transform Parent
@@ -54,11 +59,10 @@ namespace BlockTower
         }
 
         [Inject]
-        private void InjectDependencies(Transform draggingObjectContainer, DropZone holeDropZone, Canvas canvas,
+        private void InjectDependencies(Transform draggingObjectContainer, Canvas canvas,
                                         IActionEventBus bus)
         {
             _draggingObjectContainer = draggingObjectContainer;
-            _holeDropZone = holeDropZone;
             _canvas = canvas;
             _bus = bus;
         }
@@ -66,7 +70,7 @@ namespace BlockTower
         private void OnDestroy()
         {
             FireAction(ActionEvent.TowerBlockDestroyed);
-            _droppedInHole.Dispose();
+            _droppedStream.Dispose();
         }
 
         void IBeginDragHandler.OnBeginDrag(PointerEventData eventData)
@@ -84,18 +88,7 @@ namespace BlockTower
 
         void IEndDragHandler.OnEndDrag(PointerEventData eventData)
         {
-            if (_holeDropZone.IsInZone(eventData.position))
-            {
-                _droppedInHole.OnNext(this);
-                _droppedInHole.OnCompleted();
-                FireAction(ActionEvent.TowerBlockDroppedInHole);
-            }
-            else
-            {
-                Parent = _beginDragParent;
-                Position = _beginDragPosition;
-                FireAction(ActionEvent.TowerBlockDropped);
-            }
+            _droppedStream.OnNext(this);
         }
 
         private void FireAction(ActionEvent actionEvent)

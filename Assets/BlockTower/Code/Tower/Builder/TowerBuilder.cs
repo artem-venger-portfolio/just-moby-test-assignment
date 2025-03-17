@@ -112,7 +112,7 @@ namespace BlockTower
 
         private Vector3 GetPositionAboveLastBlock(TowerBlockBase placingBlock, Vector2 screenPoint)
         {
-            var placingBlockDistanceToBottom = placingBlock.Transform.rect.xMin * _canvas.scaleFactor;
+            var placingBlockDistanceToBottom = placingBlock.Transform.rect.yMin * _canvas.scaleFactor;
 
             var targetX = screenPoint.x;
             var targetY = _tower.TopY - placingBlockDistanceToBottom;

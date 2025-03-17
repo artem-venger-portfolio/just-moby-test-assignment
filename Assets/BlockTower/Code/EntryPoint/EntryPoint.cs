@@ -78,8 +78,8 @@ namespace BlockTower
             _scroll.CreateBlocks();
             _towerBuilder.Start();
             _towerDemolisher.Start();
+            _actionDisplay.Initialize();
             _localizer.Language = Language.EN;
-            _actionDisplay.PrintLocalized(LocalizationKeys.HELLO_WORLD);
         }
     }
 }

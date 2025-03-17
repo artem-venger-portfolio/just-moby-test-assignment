@@ -2,6 +2,6 @@
 {
     public interface IActionDisplay
     {
-        void PrintLocalized(string key);
+        public void Initialize();
     }
 }

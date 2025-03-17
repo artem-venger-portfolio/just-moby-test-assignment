@@ -18,6 +18,7 @@ namespace BlockTower
             _canvas = canvas;
             _blocks = new List<TowerBlockBase>();
             _blockAdded = new Subject<TowerBlockBase>();
+            _topY = new List<float>();
         }
 
         public Observable<TowerBlockBase> BlockAdded => _blockAdded;

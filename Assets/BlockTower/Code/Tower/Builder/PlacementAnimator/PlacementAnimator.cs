@@ -18,24 +18,26 @@ namespace BlockTower
         {
             var sequence = DOTween.Sequence();
 
-            var currentPosition = transform.position;
-            var spinPosition = new Vector3(targetPositoin.x, currentPosition.y, targetPositoin.z);
-            var moveToSpinPositionDuration = Vector3.Distance(currentPosition, spinPosition) /
-                                             _config.MoveToSpinPositionSpeed;
-            var moveToSpinPositionAnimation = transform.DOMove(spinPosition, moveToSpinPositionDuration)
-                                                       .SetEase(Ease.Linear);
-            sequence.Append(moveToSpinPositionAnimation);
+            var startPosition = targetPositoin + new Vector3(x: 0, _config.StartHeight, z: 0);
+            transform.position = startPosition;
 
-            var placementDuration = _config.PlacementDuration;
-            var moveToTargetPositionAnimation = transform.DOMove(targetPositoin, placementDuration)
-                                                         .SetEase(Ease.InBack);
-            sequence.Append(moveToTargetPositionAnimation);
-
+            var duration = _config.Duration;
             var spinAngle = new Vector3(x: 0, y: 0, z: 360);
-            var spinDuration = placementDuration * _config.SpinRelativeDuration;
+            var spinDuration = duration * _config.SpinRelativeDuration;
             var spinAnimation = transform.DORotate(spinAngle, spinDuration, RotateMode.FastBeyond360)
                                          .SetEase(Ease.OutCubic);
-            sequence.Join(spinAnimation);
+            sequence.Append(spinAnimation);
+
+            var moveUpDuration = duration * _config.MoveUpRelativeDuration;
+            var moveUpAnimation = transform.DOMoveY(_config.MoveUpDistance, moveUpDuration)
+                                           .SetRelative()
+                                           .SetEase(Ease.OutQuart);
+            sequence.Join(moveUpAnimation);
+
+            var moveDownDuration = duration - moveUpDuration;
+            var moveToTargetPositionAnimation = transform.DOMove(targetPositoin, moveDownDuration)
+                                                         .SetEase(Ease.InQuart);
+            sequence.Append(moveToTargetPositionAnimation);
 
             return sequence;
         }

@@ -35,6 +35,8 @@ MonoBehaviour:
     - {r: 1, g: 0, b: 0.6333332, a: 1}
     - {r: 1, g: 0, b: 0.3333335, a: 1}
     PlacementAnimationConfig:
-      _moveToSpinPositionSpeed: 1
-      _placementDuration: 1
+      _duration: 1
       _spinRelativeDuration: 0.7
+      _startHeight: 30
+      _moveUpRelativeDuration: 0.5
+      _moveUpDistance: 30

@@ -13,11 +13,12 @@ namespace BlockTower
             const int min_x = 0;
             var maxX = Screen.width;
             const int min_y = 0;
-            var maxY = Screen.height;
 
-            return bottomLeft.x >= min_x &&
-                   bottomLeft.y >= min_y &&
-                   topRight.x <= maxX;
+            var result = bottomLeft.x >= min_x &&
+                         bottomLeft.y >= min_y &&
+                         topRight.x <= maxX;
+
+            return result;
         }
     }
 }

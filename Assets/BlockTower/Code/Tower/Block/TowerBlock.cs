@@ -53,6 +53,11 @@ namespace BlockTower
             _holeDropZone = holeDropZone;
         }
 
+        private void OnDestroy()
+        {
+            _droppedInHole.Dispose();
+        }
+
         void IBeginDragHandler.OnBeginDrag(PointerEventData eventData)
         {
             _beginDragParent = Parent;

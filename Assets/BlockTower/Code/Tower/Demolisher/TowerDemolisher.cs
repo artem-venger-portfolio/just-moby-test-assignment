@@ -29,6 +29,8 @@ namespace BlockTower
 
         private void BlockDroppedInHoleEventHandler(TowerBlockBase blockBase)
         {
+            _tower.Remove(blockBase);
+            blockBase.DestroySelf();
         }
     }
 }

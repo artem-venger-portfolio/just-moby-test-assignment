@@ -5,6 +5,7 @@ using DG.Tweening;
 using JetBrains.Annotations;
 using R3;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace BlockTower
 {
@@ -137,13 +138,18 @@ namespace BlockTower
             else
             {
                 var lastBlock = _tower.GetLastBlock();
-                var lastBlockTransform = lastBlock.Transform;
-                var lastBlockDistanceToTop = lastBlockTransform.rect.yMax * _canvas.scaleFactor;
-                var lastBlockTopY = lastBlockTransform.position.y + lastBlockDistanceToTop;
+                var lastBlockCorners = lastBlock.GetWorldCorners();
+                var lastBlockTopLeft = lastBlockCorners[1];
+                var lastBlockTopRight = lastBlockCorners[2];
 
+                var lastBlockTopEdgeLength = lastBlockTopRight.x - lastBlockTopLeft.x;
+                var maxOffset = lastBlockTopEdgeLength / 2;
+                var offset = Random.insideUnitCircle.x * maxOffset;
+                var targetX = lastBlock.Transform.position.x + offset;
+                
                 var placingBlockDistanceToBottom = newBlock.Transform.rect.xMin * _canvas.scaleFactor;
-                var targetY = lastBlockTopY - placingBlockDistanceToBottom;
-                targetPosition = new Vector3(newBlockPosition.x, targetY, newBlockPosition.z);
+                var targetY = lastBlockTopLeft.y - placingBlockDistanceToBottom;
+                targetPosition = new Vector3(targetX, targetY, newBlockPosition.z);
             }
 
             return targetPosition;

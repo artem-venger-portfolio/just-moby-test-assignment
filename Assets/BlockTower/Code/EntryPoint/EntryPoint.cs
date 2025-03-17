@@ -62,7 +62,7 @@ namespace BlockTower
         {
             var gameInstaller = new GameInstaller(config, _scrollBlockTemplate, _scrollContent, _canvas, _scroll,
                                                   _towerDropZone, _towerBlockContainer, _towerBlock,
-                                                  _draggingObjectContainer);
+                                                  _draggingObjectContainer, _holeDropZone);
             _context.AddNormalInstaller(gameInstaller);
             _context.Run();
         }

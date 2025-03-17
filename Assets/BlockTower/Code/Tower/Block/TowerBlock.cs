@@ -11,10 +11,11 @@ namespace BlockTower
         [SerializeField]
         private Image _image;
 
-        private readonly Subject<TowerBlockBase> _dropped = new();
+        private readonly Subject<TowerBlockBase> _droppedInHole = new();
         private Transform _draggingObjectContainer;
         private Transform _beginDragParent;
         private Vector3 _beginDragPosition;
+        private DropZone _holeDropZone;
 
         public override Color Color
         {
@@ -26,7 +27,7 @@ namespace BlockTower
 
         public override RectTransform Transform => (RectTransform)transform;
 
-        public override Observable<TowerBlockBase> Dropped => _dropped;
+        public override Observable<TowerBlockBase> DroppedInHole => _droppedInHole;
 
         public override Vector3[] GetWorldCorners()
         {
@@ -46,9 +47,10 @@ namespace BlockTower
         }
 
         [Inject]
-        private void InjectDependencies(Transform draggingObjectContainer)
+        private void InjectDependencies(Transform draggingObjectContainer, DropZone holeDropZone)
         {
             _draggingObjectContainer = draggingObjectContainer;
+            _holeDropZone = holeDropZone;
         }
 
         void IBeginDragHandler.OnBeginDrag(PointerEventData eventData)
@@ -65,9 +67,16 @@ namespace BlockTower
 
         void IEndDragHandler.OnEndDrag(PointerEventData eventData)
         {
-            Parent = _beginDragParent;
-            Position = _beginDragPosition;
-            _dropped.OnNext(this);
+            if (_holeDropZone.IsInZone(eventData.position))
+            {
+                _droppedInHole.OnNext(this);
+                _droppedInHole.OnCompleted();
+            }
+            else
+            {
+                Parent = _beginDragParent;
+                Position = _beginDragPosition;
+            }
         }
     }
 }

@@ -14,10 +14,11 @@ namespace BlockTower
         private readonly Transform _towerBlockContainer;
         private readonly TowerBlockBase _towerBlock;
         private readonly Transform _draggingObjectContainer;
+        private readonly DropZone _holeDropZone;
 
         public GameInstaller(IGameConfig config, ScrollBlock scrollBlockTemplate, Transform scrollContent,
                              Canvas canvas, ScrollBase scroll, DropZone towerDropZone, Transform towerBlockContainer,
-                             TowerBlockBase towerBlock, Transform draggingObjectContainer)
+                             TowerBlockBase towerBlock, Transform draggingObjectContainer, DropZone holeDropZone)
         {
             _config = config;
             _scrollBlockTemplate = scrollBlockTemplate;
@@ -28,6 +29,7 @@ namespace BlockTower
             _towerBlockContainer = towerBlockContainer;
             _towerBlock = towerBlock;
             _draggingObjectContainer = draggingObjectContainer;
+            _holeDropZone = holeDropZone;
         }
 
         public override void InstallBindings()
@@ -92,7 +94,7 @@ namespace BlockTower
                         .FromComponentInNewPrefab(_towerBlock)
                         .UnderTransform(_towerBlockContainer)
                         .AsSingle()
-                        .WithArguments(_draggingObjectContainer)
+                        .WithArguments(_draggingObjectContainer, _holeDropZone)
                         .NonLazy();
 
             subContainer.Bind<IBuildCondition>()

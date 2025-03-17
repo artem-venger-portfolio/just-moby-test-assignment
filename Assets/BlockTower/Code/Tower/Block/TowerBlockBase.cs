@@ -9,7 +9,7 @@ namespace BlockTower
         public abstract Image Image { get; }
         public abstract RectTransform Transform { get; }
         public abstract Color Color { get; set; }
-        public abstract Observable<TowerBlockBase> Dropped { get; }
+        public abstract Observable<TowerBlockBase> DroppedInHole { get; }
         public abstract Vector3[] GetWorldCorners();
     }
 }

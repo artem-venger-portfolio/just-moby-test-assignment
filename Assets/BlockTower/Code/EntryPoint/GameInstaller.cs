@@ -99,6 +99,20 @@ namespace BlockTower
                      .To<ActionEventBus>()
                      .AsSingle()
                      .NonLazy();
+
+            Container.Bind<ISaveSystem>()
+                     .To<SaveSystem>()
+                     .FromNewComponentOnNewGameObject()
+                     .WithGameObjectName(nameof(SaveSystem))
+                     .AsSingle()
+                     .NonLazy();
+
+            Container.BindFactory<TowerBlockBase, TowerBlockFactory>()
+                     .FromComponentInNewPrefab(_towerBlock)
+                     .UnderTransform(_towerBlockContainer)
+                     .AsSingle()
+                     .WithArguments(_draggingObjectContainer)
+                     .NonLazy();
         }
 
         private void InstallTowerBuilder(DiContainer subContainer)
@@ -107,13 +121,6 @@ namespace BlockTower
                         .To<TowerBuilder>()
                         .AsSingle()
                         .WithArguments(_towerDropZone)
-                        .NonLazy();
-
-            subContainer.BindFactory<TowerBlockBase, TowerBlockFactory>()
-                        .FromComponentInNewPrefab(_towerBlock)
-                        .UnderTransform(_towerBlockContainer)
-                        .AsSingle()
-                        .WithArguments(_draggingObjectContainer)
                         .NonLazy();
 
             subContainer.Bind<IBuildCondition>()

@@ -7,5 +7,6 @@ namespace BlockTower
     public class GameConfigData
     {
         public Color[] Colors;
+        public PlacementAnimationConfig PlacementAnimationConfig;
     }
 }

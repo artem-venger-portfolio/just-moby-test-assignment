@@ -6,5 +6,6 @@ namespace BlockTower
     public interface IGameConfig
     {
         IList<Color> Colors { get; }
+        PlacementAnimationConfig PlacementAnimationConfig { get; }
     }
 }
